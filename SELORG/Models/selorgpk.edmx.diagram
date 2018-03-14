@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b575fd49683c4d62b6c24d5306b526c0" Name="Diagram1">
+        <EntityTypeShape EntityType="selorgpkModel.Application" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.ApplicationCategory" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.Comment" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.Librarian" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.Post" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.PostCategory" Width="1.5" PointX="3.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.RecentData" Width="1.5" PointX="3" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.UserProfile" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <AssociationConnector Association="selorgpkModel.FK_Applictaion" ManuallyRouted="false" />
+        <AssociationConnector Association="selorgpkModel.FK_UserApplication" ManuallyRouted="false" />
+        <AssociationConnector Association="selorgpkModel.FK_UserComment" ManuallyRouted="false" />
+        <AssociationConnector Association="selorgpkModel.FK_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="selorgpkModel.FK_UserPost" ManuallyRouted="false" />
+        <AssociationConnector Association="selorgpkModel.FK_UserRecentData" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
