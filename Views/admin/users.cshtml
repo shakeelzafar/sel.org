@@ -1,0 +1,126 @@
+﻿@using SELORG.Models
+
+@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+    ViewBag.Title = "users";
+    UserProfile up = (UserProfile)Session["user"];
+    selorgpkEntities ctx = new selorgpkEntities();
+    List<UserProfile> users = ctx.UserProfiles.Where(x => x.role != 1 && x.UserId != up.UserId).ToList();
+    //0 for admin, 1 for normal user, 2 Co-Admin, 3 for Editor, 4 for Team.
+    int srNo = 1;
+}
+
+<div id="result">
+<div class="content-wrapper">
+    
+<div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="../../admin/index">Admin</a>
+        </li>
+        <li class="breadcrumb-item active">users</li>
+       
+      </ol>
+      <!-- Example Post categories-->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> USERS
+              
+
+        </div>
+  
+    <!-- Example Post categories-->
+    
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                    <th>Sr. No</th>
+                  <th>Name</th>
+                  <th>Email</th>                  
+                    <th>Role</th>                                 
+                  <th>Status</th>                    
+                  <th>Edit Role</th>
+                  <th>Delete</th>
+                  
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                   <th>Sr. No</th>
+                  <th>Name</th>
+                  <th>Email</th>                  
+                    <th>Role</th>                                 
+                  <th>Status</th>                    
+                  <th>Edit Role</th>
+                  <th>Delete</th>
+                  
+                </tr>
+              </tfoot>
+              <tbody>
+                   @{
+                       srNo = 1;
+                       foreach (var v in users)
+                       {
+                  <tr >
+                   <td >@srNo</td>
+                  <td><a href="../../users/profile/@v.UserId">@v.DisplayName</a></td>
+                  <td>@v.Email</td>                 
+                  @if (v.role == 0) {<td>USER </td>} else if (v.role == 2){ <td>Co-Admin </td> }
+                      else if (v.role == 3){ <td>Editor </td> }
+                      else if (v.role == 4){ <td>Team </td> }
+                      else { <td>Not avialable</td> }
+                
+                  @if (v.isDeleted == 1) {<td>Deleted </td>} else{ <td>Active </td> }
+                <td onclick="editrole(@v.UserId)"><a class="nav-link" href="#" ><i class="fa fa-edit"></i></a></td>  
+                  <td><a class="nav-link" data-toggle="modal" href="#" onclick="deleteuser(@v.UserId, '@v.DisplayName')" data-target="#removeappModal"><i class="fa fa-remove"></i></a></td>
+                      </tr>
+                      srNo = srNo + 1;
+                  }
+                  }
+                  
+                 
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+</div>
+
+    </div></div>
+
+ <div class="modal fade" id="removeappModal" tabindex="-1" role="dialog" aria-labelledby="removeappModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="removeappModalLabel">Ready to Delete?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Delete" below if you are ready to delete <p id="apptobedeleted"></p>.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" type="submit" href="../../admin/deleteuser">Delete</a>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <script type="text/javascript">
+        
+        function editrole(ID) {
+            $("#result").load("../../admin/getuser/" + ID);
+        }
+        
+        function deleteuser(ID, Name) {
+            $("#apptobedeleted").html(Name);
+            $("a[href='../../admin/deleteuser']").attr('href', '../../admin/deleteuser/' + ID);
+
+        }
+
+    </script>

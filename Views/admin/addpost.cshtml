@@ -1,0 +1,92 @@
+﻿
+@model SELORG.Models.PostCategory
+@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+}
+
+ <div class="content-wrapper">   
+     
+    <div class="card card-register mx-auto mt-5">
+        <h4 style="text-align:center">Category: @Model.CategoryTitle
+     </h4> 
+      <div class="card-header">Add New Post</div>
+      <div class="card-body">
+        <form id="addformcategory" method="post" enctype="multipart/form-data" action="../../admin/add_post">       
+            
+          <div class="form-group">            
+            <input class="form-control" id="appCategoryId" value="@Model.CategoryId" name="postCategoryId" required type="text" aria-describedby="emailHelp" hidden>
+          </div>
+       
+          <div class="form-group">
+            <label for="Title">Title of Post</label>
+            <input class="form-control"  id="Title" required name="Title" type="text" aria-describedby="emailHelp" placeholder="Enter Title">
+          <p id="resultform" hidden></p>
+          </div>
+             <div class="form-group">
+            <label for="Title">Title of Author</label>
+            <input class="form-control"  id="author" name="Author" type="text" aria-describedby="emailHelp" placeholder="Enter Author">
+          
+          </div>
+          <div class="form-group">
+            <label for="Title">Allignment (e.g Left for English Content, Right for Urdu...) </label>
+             <select name="Allignment" required class="form-control"><option value="left">Left.</option><option value="right">Right.</option></select>
+          </div>
+           
+           <div class="form-group">
+            <label for="Title">Tags (Comma ',' Separated)</label>
+            <input class="form-control"  id="tag" name="Tags" type="text" aria-describedby="emailHelp" placeholder="Enter Tags">
+          
+          </div>
+          <div id="detail">
+
+
+          </div>
+            
+          
+          <button id="submitform" class="btn btn-primary btn-block"  type="submit">Create</button>
+        </form>
+          <button id="cancel" class="btn btn-default btn-block"  type="submit"><a href="../../admin/getpost/@Model.CategoryId">Cancel</a></button>
+          </div>
+          
+          
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+<script src="../../Content/admin/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //$('#checking').hide(); 
+       
+        $("#detail").load("../../admin/postdetail" );
+      
+     
+        $("#addformcategory").submit(function (e) { e.preventDefault() });
+
+        $('#submitform').click(function () {
+
+            var Title = $('#Title').val();
+
+            var appCategoryId = $('#appCategoryId').val();
+            //  alert(Title + " " + appCategoryId);
+            $.post("/admin/isAppExists?title=" + Title + "&appCategoryId=" + appCategoryId, function (data) {
+                if (data == "y") {
+                    $("#resultform").html("This Application already exists.")
+                    alert("This Application already exists.");
+                    $("#resultform").show();
+                    $("#addformcategory").submit(function (e) { e.preventDefault() });
+                } else {
+                    $("#resultform").hide();
+                    // alert("b");
+                    $("#addformcategory").unbind('submit').submit();
+                    //alert("a");
+                }
+
+            });
+
+        });
+
+
+    });
+    </script>

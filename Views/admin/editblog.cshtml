@@ -1,0 +1,129 @@
+﻿@model SELORG.Models.Blog
+@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+}
+
+
+<style>
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+</style>
+
+ <div class="content-wrapper">   
+     
+    <div class="card card-register mx-auto mt-5">
+        <h4 style="text-align:center">Category: Blog
+     </h4> 
+      <div class="card-header">Add New Blog</div>
+      <div class="card-body">
+        <form id="addformcategory" method="post" enctype="multipart/form-data" action="../../admin/updateblog" >       
+            
+           <input name="BlogId" hidden value="@Model.BlogId"/>
+          <div class="form-group">
+            <label for="Title">Title of Blog</label>
+            <input class="form-control"  id="Title" name="Title" value="@Model.BlogTitle" type="text" aria-describedby="emailHelp" placeholder="Enter Title">
+          <p id="resultform" hidden></p>
+          </div>
+          
+          <div class="form-group">
+            <label for="Title">Description of Blog</label>
+            <textarea class="form-control"  id="Content" name="Description"  required  aria-describedby="emailHelp" placeholder="Enter Description">@Model.BlogDescription</textarea>
+          </div>
+            <div class="form-group">
+            <label for="Title"><b>Select image</b> </label>
+                <div style="border:1px solid gray; background-color:lightgray; width:100%;  " class="btn btn-file">
+                  <input id="imgId" type="file" value="@Model.picture" name="files" onchange="previewFiles('imgId','preview')">
+
+                    <p style="margin-top:1%">Upload image from here</p></div>
+             
+
+          </div>
+           <div id="preview"><img src="../../Files/Blogs/@Model.BlogId/@Model.picture" style="height:300px; width:600px" /> </div>
+              <div class="form-group">
+            <label for="Title">Tags for Application (coma ',' separated)</label>
+           <input class="form-control" id="Tags" name="Tags" value="@Model.BlogTags" required type="text" aria-describedby="emailHelp" placeholder="Enter Tags">
+          </div>
+
+          <div class="form-group">
+            <label for="Title">Allignment (e.g Left for English Content, Right for Urdu...) </label>
+             <select name="Allignment" required class="form-control"><option value="left">Left.</option><option value="right">Right.</option></select>
+          </div>
+          <div class="form-group">
+            <label for="Title">isDeleted </label>
+             <select name="isDeleted" required class="form-control"><option value="0">No</option><option value="1">Yes</option></select>
+          </div>
+          <button id="submitform" class="btn btn-primary btn-block"  type="submit">Create</button>
+        </form>
+          <button id="cancel" class="btn btn-default btn-block"  type="submit"><a href="../../admin/blogs">Cancel</a></button>
+        
+          
+          
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+<script src="../../Content/admin/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+
+    function addnew(id) {
+        //alert(id);
+        $("#addformcategory").submit(function (e) { e.preventDefault() });
+        $("#" + id).load("../../admin/postdetail");
+        $("#" + id + "addNew").hide();
+    }
+
+    function previewFiles(imgId, previewId) {
+
+        var preview = document.querySelector('#' + previewId);
+        if (preview.childElementCount > 0) {
+
+            $("#" + previewId).empty();
+
+
+        }
+        var files = document.querySelector('#' + imgId).files;
+
+        function readAndPreview(file) {
+
+            // Make sure `file.name` matches our extensions criteria
+            if (/\.(jpe?g|png|gif|jpg)$/i.test(file.name)) {
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 300;
+                    image.width = 600;
+                    image.title = file.name;
+                    image.src = this.result;
+                    preview.appendChild(image);
+                }, false);
+
+                reader.readAsDataURL(file);
+            }
+
+        }
+
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+
+    }
+</script>

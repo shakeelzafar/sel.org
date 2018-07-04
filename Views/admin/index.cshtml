@@ -1,0 +1,339 @@
+﻿@using SELORG.Models
+@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+    int srNo = 1;
+    selorgpkEntities ctx = new selorgpkEntities();
+    List<PostCategory> listOfPostCategories = ctx.PostCategories.ToList();
+    List<ApplicationCategory> listOfAppCategories = ctx.ApplicationCategories.ToList();
+    UserProfile up = (UserProfile)Session["user"];
+}
+ @if (up != null)
+ {
+       if ((up.role == 1 || up.role == 2))
+       {
+<div id="result">
+<div class="content-wrapper">
+    
+<div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="../../admin/index">Admin</a>
+        </li>
+        <li class="breadcrumb-item active">Index</li>
+       
+      </ol>
+      <!-- Example Post categories-->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Post Categories
+              <div style="margin-left:80%; " >
+                   <a class="btn btn-success" href="../../admin/addpostcategory">Add New</a> 
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                   <th >Sr. No</th>
+                  <th>Title</th>
+                  <th>Post Count</th>
+                  <th>Post Views</th>
+                    <th>Status</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                    <th >Sr. No</th>
+                   <th>Title</th>
+                  <th>Post Count</th>
+                  <th>Post Views</th>
+                    <th>Status</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  
+                </tr>
+              </tfoot>
+              <tbody>
+                  @foreach (var v in listOfPostCategories)
+                  {
+                  <tr >
+                   <td >@srNo</td>
+                  <td><a href="../../admin/getpost/@v.CategoryId">@v.CategoryTitle</a></td>
+                  <td>@v.Posts.ToList().Count()</td>
+                  <td>@v.Posts.ToList().Select(x => x.views).ToList().Sum()</td>
+                  @if (v.isDeleted == 1)
+                  {<td>Deleted </td>}
+                  else
+                  { <td>Active </td> }
+                  <td onclick="editpost(@v.CategoryId)"><a class="nav-link" href="#" ><i class="fa fa-edit"></i></a></td>
+                  <td><a class="nav-link" data-toggle="modal" href="#" onclick="deletepost(@v.CategoryId,'@v.CategoryTitle')" data-target="#removeModal"><i class="fa fa-remove"></i></a></td>
+                      </tr>
+                  srNo = srNo + 1;
+                  }
+                              
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+    
+    <!-- Example Post categories-->
+    <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Application Categories
+         <div style="margin-left:80%; " >
+                   <a class="btn btn-success" href="../../admin/addappcategory">Add New</a> 
+          </div>
+            </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                    <th>ID</th>
+                  <th>Title</th>
+                  <th>App Count</th>                  
+                  <th>Status</th>
+                    <th>Edit</th>
+                  <th>Delete</th>
+                  
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                    <th>ID</th>
+                   <th>Title</th>
+                  <th>App Count</th>
+                  <th>Status</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  
+                </tr>
+              </tfoot>
+              <tbody>
+                   @{
+                  srNo = 1;
+                  foreach (var v in listOfAppCategories)
+                  {
+                  <tr >
+                   <td >@srNo</td>
+                  <td><a href="../../admin/getapp/@v.ApplicationCategoryId">@v.Title</a></td>
+                  <td>@v.Applications.ToList().Count()</td>                 
+                  @if (v.isDeleted == 1)
+                  {<td>Deleted </td>}
+                  else
+                  { <td>Active </td> }
+                  <td onclick="editapp(@v.ApplicationCategoryId)"><a class="nav-link" href="#" ><i class="fa fa-edit"></i></a></td>
+                  <td><a class="nav-link" data-toggle="modal" href="#" onclick="deleteapp(@v.ApplicationCategoryId,'@v.Title')" data-target="#removeappModal"><i class="fa fa-remove"></i></a></td>
+                      </tr>
+                  srNo = srNo + 1;
+                  }
+                  }
+                  
+                 
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+</div>
+
+
+ <div class="modal fade" id="removeappModal" tabindex="-1" role="dialog" aria-labelledby="removeappModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="removeappModalLabel">Ready to Delete?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Delete" below if you are ready to delete <p id="apptobedeleted"></p>.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" type="submit" href="../../admin/deleteappcategory">Delete</a>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+
+ <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="removeModalLabel">Ready to Delete?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Delete" below if you are ready to delete <p id="tobedeleted"></p>.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" type="submit" href="../../admin/deletepostcategory">Delete</a>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        function editpost(ID) {
+            //alert(ID);
+            $("#result").load("../../admin/editpostcategory/" + ID);
+        }
+
+        function deletepost(ID, Name) {
+            $("#tobedeleted").html(Name);
+            $("a[href='../../admin/deletepostcategory']").attr('href', '../../admin/deletepostcategory/' + ID);
+
+        }
+
+        function editapp(ID) {
+            //alert(ID);
+            $("#result").load("../../admin/editappcategory/" + ID);
+        }
+
+        function deleteapp(ID, Name) {
+            $("#apptobedeleted").html(Name);
+            $("a[href='../../admin/deleteappcategory']").attr('href', '../../admin/deleteappcategory/' + ID);
+
+        }
+       
+    </script>
+    </div>
+    </div>
+       }
+       else
+       {
+        
+          
+           
+           srNo = 1;           
+           List<Blog> listOfBlogs = ctx.Blog.Where(x=>x.UserId==up.UserId).ToList();
+    
+
+
+<div id="result">
+<div class="content-wrapper">
+    
+<div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="../../admin/index">Admin</a>
+        </li>
+        <li class="breadcrumb-item active">Index</li>
+       
+      </ol>
+      <!-- Example Post categories-->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Blogs
+             <div style="margin-left:80%; " >
+                   <a class="btn btn-success" href="../../admin/addblog/">Add New</a> 
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                   <th >Sr. No</th>
+                  <th>Title</th>
+                  <th>Post Count</th>
+                  <th>Writer</th>
+                    <th>Status</th>
+                  
+                  <th>Delete</th>
+                  
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                    <th >Sr. No</th>
+                   <th>Title</th>
+                  <th>Post Count</th>
+                  <th>Writer</th>
+                    <th>Status</th>
+                  
+                  <th>Delete</th>
+                  
+                </tr>
+              </tfoot>
+              <tbody>
+                  @foreach (var v in listOfBlogs)
+                  {
+                  <tr >
+                   <td >@srNo</td>
+                  <td><a href="../../admin/getblogposts/@v.BlogId">@v.BlogTitle</a></td>
+                  <td>@v.UserProfile.Posts.ToList().Count()</td>
+                  <td>@v.UserProfile.DisplayName</td>
+                  @if (v.isDeleted == 1)
+                  {<td>Deleted </td>}
+                  else
+                  { <td>Active </td> }
+                
+                  <td><a class="nav-link" data-toggle="modal" href="#" onclick="deleteblog(@v.BlogId,'@v.BlogTitle')" data-target="#removeModal"><i class="fa fa-remove"></i></a></td>
+                      </tr>
+                  srNo = srNo + 1;
+                  }
+                              
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+    
+   
+   
+</div>
+ </div>
+ </div>
+
+
+ 
+ <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="removeModalLabel">Ready to Delete?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Delete" below if you are ready to delete <p id="tobedeleted"></p>.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" type="submit" href="../../admin/deleteblog">Delete</a>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+
+        function deleteblog(ID, Name) {
+            $("#tobedeleted").html(Name);
+            $("a[href='../../admin/deleteblog']").attr('href', '../../admin/deleteblog/' + ID);
+
+        }
+
+
+
+    </script>   
+       }
+     
+     
+     
+ }

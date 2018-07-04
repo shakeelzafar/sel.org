@@ -1,0 +1,66 @@
+﻿@using SELORG.Models
+@{
+    List<Librarian> list = (List<Librarian>)Session["Librarians"];
+    
+}
+<!-- content-section-starts-here -->
+	<div class="main-body">
+		<div class="wrap">
+			<div class="col-md-8 content-left" >
+			 <div class="newsletter">
+					<h1 class="side-title-head">Find Librarian</h1>
+				
+					<form method="get" action="../../professionals/find">
+                         <label class="radio-inline"><input type="radio" value="name" checked name="type">Name</label>
+                        <label class="radio-inline"><input type="radio" value="org" name="type">Organization</label>
+                        <label class="radio-inline"><input type="radio" value="city" name="type">City</label>
+                        
+					<input type="text" name="librarianData" class="text">
+						<input type="submit" value="submit">
+					</form>
+				</div>
+                <br>
+                <h3>Search Results:</h3><br>
+                @{
+                    if(list.Count()<1){
+                        <h4 style="margin-left:10%">No Result Found for your Search.</h4>
+                    }
+                    
+                foreach(var v in list){
+            <div class="sports-top" style="border:1px solid grey; padding-left:3%; padding-bottom:2%; width:98%">
+               
+                
+                        <div class="s-grid-small">
+                            <div class="sc-image-contact">
+                                <a href="single.html">
+                                    <img class="circular" style="width:90%" src="../../Content/studio/images/avatar.png" alt="" /></a>
+                            </div>
+                        </div>
+                     
+                            <div class="sc-text" style="margin-top:2%">
+                                <a class="power" href="../../professionals/profile/@v.LibrarianId">
+                                <h6>@v.Name</h6>
+                                @v.LibraryName<br />@v.Address</a>
+                                <p class="date">@v.Email</p>
+                                 
+                                <div class="clearfix"></div>
+                            </div>
+                       
+                <div class="clearfix"></div>
+            </div>
+                    
+                }
+                }
+			
+        </div>
+        @Html.Partial("/Views/Shared/recentposts.cshtml")
+		
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- content-section-ends-here -->
+
+
+
+
+

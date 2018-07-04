@@ -1,408 +1,124 @@
 ﻿<!-- content-section-starts-here -->
 	<div class="main-body">
 		<div class="wrap">
-			<div class="col-md-8 content-left">
+		<div class="col-md-8 content-left">
 			 
-		 
-<form style="width:92%; margin-left:4%" id="basicBootstrapForm" class="form-horizontal">
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Full name</label>
-        <div class="col-xs-4">
-            <input type="text" class="form-control" name="firstName" placeholder="First name" />
-        </div>
-        <div class="col-xs-4">
-            <input type="text" class="form-control" name="lastName" placeholder="Last name" />
-        </div>
-    </div>
+		 <div class="newsletter" style="border:grey solid 2px">
+					<h1 class="side-title-head">Add me as Librarian:</h1>
+	                  <form method="post" action="../../professionals/add_professional" style="width:98%; margin-left:3%" id="basicBootstrapForm" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Full name:</label>
+                            
+                            <div class="col-xs-8">
+                                <input type="text" style="color:black" required class="form-control" name="name" placeholder="Your Name" />
+                            </div>
+                        </div>
 
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Username</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="username" />
-        </div>
-    </div>
+                          <div class="form-group">
+                            <label class="col-xs-3 control-label">Designation:</label>
+                            <div class="col-xs-8">
+                                <input type="text" style="color:black" required class="form-control" name="designation" placeholder="Your Designation" />
+                            </div>
+                        </div>
 
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Email address</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="email" />
-        </div>
-    </div>
+                            <div class="form-group">
+                            <label class="col-xs-3 control-label">Qualification:</label>
+                            <div class="col-xs-8">
+                                <input type="text" style="color:black" required class="form-control" name="qualification" placeholder="Your Qualification" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Email address:</label>
+                            <div class="col-xs-6">
+                                <input type="email" id="emailID" style="color:black" required class="form-control" name="email" placeholder="Your Email" />
+                                  <p hidden id="librarianExists"></p>
+                            </div>
+                        </div>
 
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Password</label>
-        <div class="col-xs-5">
-            <input type="password" class="form-control" name="password" />
-        </div>
-    </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Phone #:</label>
+                            <div class="col-xs-8">
+                                <input type="text" style="color:black" class="form-control" name="contact" placeholder="Your Contact"/>
+                              
+                            </div>
+                        </div>
 
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Gender</label>
-        <div class="col-xs-6">
-            <div class="radio">
-                <label>
-                    <input type="radio" name="gender" value="male" /> Male
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="gender" value="female" /> Female
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="gender" value="other" /> Other
-                </label>
-            </div>
-        </div>
-    </div>
+                      <div class="form-group">
+                            <label class="col-xs-3 control-label">Organization:</label>
+                            <div class="col-xs-8">
+                                <input type="text" style="color:black" required class="form-control" name="libraryname" placeholder="Your Library" />
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-xs-3 control-label">Area of Specialization:</label>
+                            <div class="col-xs-6">
+                                <textarea name="Specialization" style="height:6%"  class="form-control" placeholder="Your Specialization" ></textarea>
+                                
+                                <p style="font-size:12px">SemiColon ';' separated</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Publications:</label>
+                            <div class="col-xs-6">
+                                <textarea name="Publications" style="height:6%"  class="form-control" placeholder="Your Publications" ></textarea>
+                                
+                                <p style="font-size:12px">SemiColon ';' separated</p>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <label class="col-xs-3 control-label">Associated with any Organization:</label>
+                            <div class="col-xs-6">
+                                <textarea name="ProfessionalAssosiation" style="height:6%"  class="form-control" placeholder="Your Professional Assosiation" ></textarea>
+                                
+                                <p style="font-size:12px">SemiColon ';' separated</p>
+                            </div>
+                        </div>
+                           <div class="form-group">
+                            <label class="col-xs-3 control-label">Professional Contribution:</label>
+                            <div class="col-xs-6">
+                                <textarea name="ProfessionalContribution" style="height:6%"  class="form-control" placeholder="Your Professional Contribution" ></textarea>
+                                
+                                <p style="font-size:12px">SemiColon ';' separated</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label ">Complete Address:</label>
+                            <div class="col-xs-6">
+                                <textarea style="height:6%" required class="form-control" name="firstaddress" placeholder="Street/Block" ></textarea>
+                           </div>
+                            <br />
+                           <div class="form-group col-xs-3" style="margin-left:25%">
+                                <input type="text"  style="color:black" required class="form-control "  name="city" placeholder="City/State" />                     
+                                <input type="text" style="color:black" required class="form-control "  name="country" placeholder="Country" />                     
+                         
+                            </div>
+                        </div>
+                        
 
-    <div class="form-group">
-        <label class="col-xs-3 control-label" id="captchaOperation"></label>
-        <div class="col-xs-4">
-            <input type="text" class="form-control" name="captcha" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-xs-6 col-xs-offset-3">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="agree" value="agree" /> Agree with the terms and conditions
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-xs-9 col-xs-offset-3">
-            <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Submit</button>
-        </div>
-    </div>
-</form>
-
-<script>
-    $(document).ready(function () {
-        // Generate a simple captcha
-        function randomNumber(min, max) {
-            return Math.floor(Math.random() * (max - min + 1) + min);
-        }
-        $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
-
-        $('#basicBootstrapForm').formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                firstName: {
-                    row: '.col-xs-4',
-                    validators: {
-                        notEmpty: {
-                            message: 'The first name is required'
-                        }
-                    }
-                },
-                lastName: {
-                    row: '.col-xs-4',
-                    validators: {
-                        notEmpty: {
-                            message: 'The last name is required'
-                        }
-                    }
-                },
-                username: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The username is required'
-                        },
-                        stringLength: {
-                            min: 6,
-                            max: 30,
-                            message: 'The username must be more than 6 and less than 30 characters long'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_\.]+$/,
-                            message: 'The username can only consist of alphabetical, number, dot and underscore'
-                        }
-                    }
-                },
-                email: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The email address is required'
-                        },
-                        emailAddress: {
-                            message: 'The input is not a valid email address'
-                        }
-                    }
-                },
-                password: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The password is required'
-                        },
-                        different: {
-                            field: 'username',
-                            message: 'The password cannot be the same as username'
-                        }
-                    }
-                },
-                gender: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The gender is required'
-                        }
-                    }
-                },
-                captcha: {
-                    validators: {
-                        callback: {
-                            message: 'Wrong answer',
-                            callback: function (value, validator, $field) {
-                                var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
-                                return value == sum;
-                            }
-                        }
-                    }
-                },
-                agree: {
-                    validators: {
-                        notEmpty: {
-                            message: 'You must agree with the terms and conditions'
-                        }
-                    }
-                }
-            }
-        });
-    });
-</script>
-				</div>
-			<div class="col-md-4 side-bar">
-			<div class="first_half">
-				<div class="newsletter">
-					<h1 class="side-title-head">Newsletter</h1>
-					<p class="sign">Sign up to receive our free newsletters!</p>
-					<form>
-						<input type="text" class="text" value="Email Address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email Address';}">
-						<input type="submit" value="submit">
-					</form>
-				</div>
-				<div class="list_vertical">
-		         	 	<section class="accordation_menu">
-						 
-						  <div>
-						    <input id="label-2" name="lida" type="radio" checked/>
-						    <label for="label-2" id="item2"><i class="icon-leaf" id="i2"></i>Recent Posts<i class="icon-plus-sign i-right1"></i><i class="icon-minus-sign i-right2"></i></label>
-						    <div class="content" id="a2">
-						       <div class="scrollbar" id="style-2">
-								   <div class="force-overflow">
-									<div class="popular-post-grids">
-											<div class="popular-post-grid">
-												<div class="post-img">
-													<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/tec2.jpg" alt="" /></a>
-												</div>
-												<div class="post-text">
-													<a class="pp-title" href="../../articles/detail_of_news/1"> The section of the mass media industry</a>
-													<p>On Feb 25 <a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>3 </a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>56 </a></p>
-												</div>
-												<div class="clearfix"></div>
-											</div>
-											<div class="popular-post-grid">
-												<div class="post-img">
-													<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/tec1.jpg" alt="" /></a>
-												</div>
-												<div class="post-text">
-													<a class="pp-title" href="../../articles/detail_of_news/1"> Lorem Ipsum is simply dummy text printing</a>
-													<p>On Apr 14 <a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>2 </a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>56 </a></p>
-												</div>
-												<div class="clearfix"></div>
-											</div>
-											<div class="popular-post-grid">
-												<div class="post-img">
-													<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/tec3.jpg" alt="" /></a>
-												</div>
-												<div class="post-text">
-													<a class="pp-title" href="../../articles/detail_of_news/1">There are many variations of Lorem</a>
-													<p>On Jun 25 <a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>0 </a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>56 </a></p>
-												</div>
-												<div class="clearfix"></div>
-											</div>
-											<div class="popular-post-grid">
-												<div class="post-img">
-													<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/tec4.jpg" alt="" /></a>
-												</div>
-												<div class="post-text">
-													<a class="pp-title" href="../../articles/detail_of_news/1">Sed ut perspiciatis unde omnis iste natus</a>
-													<p>On Jan 25 <a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>1 </a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>56 </a></p>
-												</div>
-												<div class="clearfix"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-						    </div>
-						  </div>
-						  <div>
-						    <input id="label-3" name="lida" type="radio"/>
-						    <label for="label-3" id="item3"><i class="icon-trophy" id="i3"></i>Comments<i class="icon-plus-sign i-right1"></i><i class="icon-minus-sign i-right2"></i></label>
-						    <div class="content" id="a3">
-						       <div class="scrollbar" id="style-2">
-							    <div class="force-overflow">
-								 <div class="response">
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>MARCH 21, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>MARCH 26, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>MAY 25, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>FEB 13, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>JAN 28, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>APR 18, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>DEC 25, 2014</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-					</div>
-
+                        <div class="form-group">
+                            <div class="col-xs-6 col-xs-offset-3">
+                                <div class="checkbox">
+                                    <label>
+                                        <input required type="checkbox" name="agree" value="agree" /> Agree with the <a href="../../home/terms_n_conditions">terms</a> and <a href="../../home/terms_n_conditions">conditions</a>.
+                                    </label>
                                 </div>
-						    </div>
-						  </div>
-						</section>
-					 </div>
-					 <div class="side-bar-articles">
-						<div class="side-bar-article">
-							<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/sai.jpg" alt="" /></a>
-							<div class="side-bar-article-title">
-								<a href="../../articles/detail_of_news/1">Contrary to popular belief, Lorem Ipsum is not simply random text</a>
-							</div>
-						</div>
-						<div class="side-bar-article">
-							<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/sai2.jpg" alt="" /></a>
-							<div class="side-bar-article-title">
-								<a href="../../articles/detail_of_news/1">There are many variations of passages of Lorem</a>
-							</div>
-						</div>
-						<div class="side-bar-article">
-							<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/sai3.jpg" alt="" /></a>
-							<div class="side-bar-article-title">
-								<a href="../../articles/detail_of_news/1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</a>
-							</div>
-						</div>
-					 </div>
-					 </div>
-			
-					<div class="clearfix"></div>
-			</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-9 col-xs-offset-3">
+                                <button type="submit" class="btn btn-primary" id="addme" name="addme" value="Sign up">Add Me</button>
+                            </div>
+                        </div>
+                    </form>
+
+				</div>
+
+ 
+		     @Html.Partial("/Views/Shared/comments.cshtml")
+				@Html.Partial("/Views/Shared/addresponse.cshtml")
+				</div>
+	            @Html.Partial("/Views/Shared/recentposts.cshtml")
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -412,3 +128,44 @@
 
 
 
+<script type="text/javascript">
+
+
+        $(document).ready(function () {
+            //$('#checking').hide();
+
+          
+            $('#emailID').change(function () {
+
+                var Email = $('#emailID').val();
+
+
+                $.post("/professionals/CheckLibrariansName?email=" + Email, function (data) {
+                    if (data == "y") {
+                        $("#librarianExists").html("You have already used this email.\nPlease use an other email.")
+                        $("#addme").hide();
+                        $("#librarianExists").show();
+                    } else {
+                        $("#addme").show();
+                        $("#librarianExists").hide();
+                    }
+
+                });
+
+            });
+
+            
+         
+
+         
+             
+            var defaults = {
+                wrapID: 'toTop', // fading element id
+                wrapHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    </script>

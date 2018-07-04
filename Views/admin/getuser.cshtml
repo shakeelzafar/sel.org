@@ -1,0 +1,80 @@
+﻿@model SELORG.Models.UserProfile
+@using SELORG.Models
+@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+    UserProfile up = (UserProfile)Session["user"];
+}
+
+ <div class="content-wrapper">   
+
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">Update UserProfile Role</div>
+      <div class="card-body">
+        <form id="addformcategory" method="post" action="../../admin/updateuserrole">
+       
+            <div class="form-group">
+            
+            <input class="form-control" id="id" name="id" value="@Model.UserId" required type="text" aria-describedby="emailHelp" hidden>
+          </div>
+           <div class="form-group">
+            <label for="Title">isDeleted</label>
+            <select name="role" id="getrole" required class="form-control">
+                <option value="0">USER</option>
+                @if(up.role==1){
+                <option value="2">Co-Admin</option>
+                }
+                <option value="3">Editor</option><option value="4">Team Member</option>
+            </select>
+            <input id="role" value="@Model.role" hidden/>
+           
+          </div>  
+        <div class="form-group">
+            <label for="Title">isDeleted</label>
+            <select name="isDeleted" id="getDeleted" required class="form-control"><option value="0">No.</option><option value="1">Yes.</option></select>
+            <input id="isDeleted" value="@Model.isDeleted" hidden/>
+           
+          </div>
+          <p id="resultform"></p>
+          <button id="submitform" class="btn btn-primary btn-block"  type="submit">Update</button>
+        </form>
+            <button id="cancel" class="btn btn-default btn-block"  type="submit"><a href="../../admin/users">Cancel</a></button>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        //$('#checking').hide(); 
+        $("#addformcategory").submit(function (e) { e.preventDefault() });
+
+        $('#submitform').click(function () {
+
+            var Title = $('#Title').val();
+            if ($('#getDeleted').val() == $('#isDeleted').val()) {
+                $.post("/admin/isAppCategoryExists?title=" + Title, function (data) {
+                    if (data == "y") {
+                        $("#resultform").html("This category already exists.")
+                        $("#resultform").show();
+                        $("#addformcategory").submit(function (e) { e.preventDefault() });
+                    } else {
+                        $("#resultform").hide();
+                        // alert("b");
+                        $("#addformcategory").unbind('submit').submit()
+                        //alert("a");
+                    }
+
+                });
+            } else {
+                $("#addformcategory").unbind('submit').submit()
+            }
+
+        });
+
+
+    });
+    </script>

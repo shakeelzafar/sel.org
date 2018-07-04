@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b575fd49683c4d62b6c24d5306b526c0" Name="Diagram1">
-        <EntityTypeShape EntityType="selorgpkModel.Application" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.Application" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="selorgpkModel.ApplicationCategory" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="selorgpkModel.Comment" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="selorgpkModel.Librarian" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.Librarian" Width="3.25" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="selorgpkModel.Post" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="selorgpkModel.PostCategory" Width="1.5" PointX="3.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="selorgpkModel.PostCategory" Width="1.5" PointX="5.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="selorgpkModel.RecentData" Width="1.5" PointX="3" PointY="16.25" IsExpanded="true" />
         <EntityTypeShape EntityType="selorgpkModel.UserProfile" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
         <AssociationConnector Association="selorgpkModel.FK_Applictaion" ManuallyRouted="false" />
@@ -19,6 +19,13 @@
         <AssociationConnector Association="selorgpkModel.FK_Category" ManuallyRouted="false" />
         <AssociationConnector Association="selorgpkModel.FK_UserPost" ManuallyRouted="false" />
         <AssociationConnector Association="selorgpkModel.FK_UserRecentData" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="selorgpkModel.Blog" Width="1.5" PointX="3.125" PointY="11.875" />
+        <AssociationConnector Association="selorgpkModel.FK_UserBlog" />
+        <EntityTypeShape EntityType="selorgpkModel.Notification" Width="1.5" PointX="9.125" PointY="13.25" />
+        <AssociationConnector Association="selorgpkModel.FK_PostNotication" />
+        <EntityTypeShape EntityType="selorgpkModel.MailingList" Width="1.5" PointX="7.2371333945715488" PointY="13.056478312731011" />
+        <EntityTypeShape EntityType="selorgpkModel.PostDetail" Width="1.5" PointX="8.5370972810951518" PointY="18.850952842669074" />
+        <AssociationConnector Association="selorgpkModel.FK_DetailPost" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,0 +1,67 @@
+﻿@using SELORG.Controllers
+@using SELORG.Models
+@{
+    selorgpkEntities ctx = new selorgpkEntities();
+
+    UserProfile up = (UserProfile)Session["user"];
+    List<Blog> list = ctx.Blog.Where(x => x.isDeleted == 0).ToList();
+    
+}
+<!-- content-section-starts-here -->
+	<div class="main-body">
+		<div class="wrap">
+			<div class="col-md-8 content-left">
+			 
+				<div class="articles">
+					<header>
+						<h3 class="title-head">Blogs
+
+                            @if(up!=null &&  up.Blog.ToList().Count()>0){
+                                <a href="../../admin/blogs" style="float:right" class="btn btn-success">Edit my Blog</a>
+                            }else if(up!=null){
+                                <a href="../../admin/blogs" style="float:right" class="btn btn-success">Create your own</a>
+                            }
+                            else{
+                               <p style="float:right;font-size:12px"class="btn btn-sm" data-toggle="modal" data-target="#signup" >To create your own blog, <a>register here</a> </p>
+                            }
+                        </h3> 
+					</header>
+                   
+                        @foreach (var v in list)
+                        { 
+                            <div class="article">
+						<div class="article-left">
+							<a href="../../publications/getblog/@v.BlogId">
+                                <img src="../../Files/Blogs/@v.BlogId/@v.picture"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>@v.CreatationDate<a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>@CRUD.getComments((String)Session["currentURL"]).Count()</a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>@v.views</a></p>
+								<a class="title"  href="../../publications/getblog/@v.BlogId"> 
+                                    @v.BlogTitle</a>
+							</div>
+							<div class="article-text">
+								<p>@v.BlogDescription</p>
+                              <a  href="../../publications/getblog/@v.BlogId"><img src="../../Content/client/images/more.png" alt="" /></a>
+                                <p>Wrote by, <strong>@v.UserProfile.DisplayName</strong></p>
+								
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+                            
+                        }
+				</div>
+
+			     @Html.Partial("/Views/Shared/comments.cshtml")
+				@Html.Partial("/Views/Shared/addresponse.cshtml")
+
+
+				</div>
+
+			  @Html.Partial("/Views/Shared/recentposts.cshtml")
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- content-section-ends-here -->

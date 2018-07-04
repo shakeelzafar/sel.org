@@ -1,0 +1,79 @@
+﻿@model SELORG.Models.Blog
+@using SELORG.Controllers
+@using SELORG.Models
+@{
+    selorgpkEntities ctx = new selorgpkEntities();
+    PostCategory pc = ctx.PostCategories.First(x => x.CategoryTitle == "blogs");
+    List<Post> list = ctx.Blog.Find(Model.BlogId).UserProfile.Posts.ToList();
+   
+    
+}
+
+
+ 
+<!-- content-section-starts-here -->
+	<div class="main-body">
+		<div class="wrap">
+			<div class="col-md-8 content-left">
+			 
+
+				<div class="articles">
+                    
+                    
+                    <div class="rslides">
+                            <img src="../../Files/Blogs/@Model.BlogId/@Model.picture"  alt="" style="height:400px">
+                            <div class="caption">
+                               
+                              
+                            </div>
+                        <div class="caption">
+                              
+                                  <img style="width:100px; height:100px" class="circular" src="../../Files/users/@Model.UserProfile.UserId/@Model.UserProfile.picture" alt="" />
+                             <a href="#">@Model.BlogDescription</a>
+                            </div>
+                    </div>
+
+                    
+                    
+					<header>
+						<h3 class="title-head">@Model.BlogDescription</h3>
+					</header>
+                   
+                        @foreach (var v in list.Where(x=>x.isDeleted==0 && x.isPublished==1 && x.PostDetail.ToList().Count()>0))
+                        { 
+                            <div class="article">
+						<div class="article-left">
+							<a href="../../publications/detail/@v.PostId">
+                                <img src="@v.PostDetail.First().FileName.Replace("~","../..")"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>@v.CreatationDate<a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>@CRUD.getComments((String)Session["currentURL"]).Count()</a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>@v.views</a></p>
+								<a class="title" href="../../publications/detail/@v.PostId"> 
+                                    @v.PostTitle</a>
+							</div>
+							<div class="article-text">
+								<p>@v.PostDetail.First().Content</p>
+								<a href="../../publications/detail/@v.PostId"><img src="../../Content/client/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+                            
+                        }
+                          
+			
+				</div>
+
+			     @Html.Partial("/Views/Shared/comments.cshtml")
+				@Html.Partial("/Views/Shared/addresponse.cshtml")
+
+
+				</div>
+
+			  @Html.Partial("/Views/Shared/recentposts.cshtml")
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- content-section-ends-here -->

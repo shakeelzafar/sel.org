@@ -1,4 +1,17 @@
-﻿<!--
+﻿@using SELORG.Models
+@{
+    UserProfile up = (UserProfile)Session["user"];
+    selorgpkEntities ctx = new selorgpkEntities();
+    List<ApplicationCategory> listOfApps = new List<ApplicationCategory>();
+    List<PostCategory> listOfPostCategories = ctx.PostCategories.Where(x => x.isDeleted == 0 && x.CategoryTitle.ToLower() != "megazine" && x.CategoryTitle.ToLower() != "blog").ToList();
+    try{
+      listOfApps = ctx.ApplicationCategories.Where(x=>x.isDeleted==0).ToList();
+    }catch(Exception e){
+    }
+   
+    List<Post> listOfPosts = ctx.Posts.ToList();
+}
+<!--
 Author: W3layouts
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -14,7 +27,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <title>Express News a Entertainment Category Flat Bootstarp responsive Website Template | Home :: w3layouts</title>
+    <title>Sada-e-Librarian</title>
     <link href="../../Content/client/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../../Content/client/js/jquery.min.js"></script>
@@ -37,7 +50,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!--/script-->
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
-
+            $("#parentId").hide();
 
             $(".scroll").click(function (event) {
                 event.preventDefault();
@@ -46,7 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     </script>
 </head>
-<body>
+<body   >
     <!-- header-section-starts-here -->
     <div class="header" id="#to-top">
         <div class="header-top" style="margin-left:3%; margin-right:3%;  margin-top:.5%; margin-bottom:-.2%; padding-bottom:-.4%"> 
@@ -60,8 +73,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </div>
                 <div class="num">
+                    @if(up==null){
                     <p style="color:white"> <a style="color:black" class="btn btn-sm" data-toggle="modal" data-target="#login"> Sign In </a>  I
                          <a style="color:black" class="btn btn-sm" data-toggle="modal" data-target="#signup"> Sign Up </a></p>
+                    }else{
+                       
+                            if(up.role==1||up.role==2){
+                                 <p style="color:white"> 
+                                 <a style="color:black" class="btn btn-sm" href="../../users/profile/@up.UserId"> Profile </a>  I
+                                 <a style="color:black" class="btn btn-sm" href="../../admin"> Dashboard </a></p>
+                                 
+                            }
+                        else{
+                                   <p style="color:white"> 
+                                     <a style="color:black" class="btn btn-sm" href="../../users/profile/@up.UserId"> Profile </a>  I
+                                      <a style="color:black" class="btn btn-sm" href="../../users/logout"> Sign Out </a></p>
+                        }
+                           
+                      
+                    }
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -86,62 +116,60 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                
                                 
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Publications<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="../../publications/megazine">Megazine</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="../../publications/directory">Directory</a></li>
-                                        <li class="divider"></li>
-                                     
-                                    </ul>
+                                    <a href="../../publications/megazine" >Megazine</a>
+                                    
                                 </li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Articles<b class="caret"></b></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="../../articles/englishNews">Englis News</a></li>
+                                        @foreach(var v in listOfPostCategories){
+                                        <li><a href="../../publications/posts/@v.CategoryId">@v.CategoryTitle</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="../../articles/urduNews">Urdu News</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="../../articles/videos">Videos</a></li>
-                                        <li class="divider"></li>
-                                        
+                                        }
                                     </ul>
                                 </li>
                                   <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Applications<b class="caret"></b></a>
+                                      
                                     <ul class="dropdown-menu">
-                                        <li><a href="../../applications/softwares">Softwares</a></li>
+                                        @foreach(var v in listOfApps){
+                                        <li><a href="../../applications/apps/@v.ApplicationCategoryId">@v.Title</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="../../applications/services">Setrvices</a></li>
-                                        <li class="divider"></li>
+                                        }
+                                        
                                          
                                     </ul>
                                 </li>
+                                
                                   <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Professionals<b class="caret"></b></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Find a Librarian<b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="../../professionals/addprofessional">Submit Your Data</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="../../professionals/findprofessional">Find Librarian</a></li>
+                                        <li><a href="../../professionals/findprofessional">Database</a></li>
                                         <li class="divider"></li> 
                                         
                                     </ul>
                                 </li>
-                       
+                        <li >
+                                    <a href="../../publications/blogs" >Blogs</a>
+                                    
+                                </li>
                               
                               
                             </ul>
                             <div class="search">
-                                <!-- start search-->
+                                <!-- start search
                                 <div class="search-box">
                                     <div id="sb-search" class="sb-search">
-                                        <form>
-                                            <input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
+                                        <form method="get" action="../../search/get">
+                                            <input class="sb-search-input" placeholder="Enter your search term..." type="search" name="searchstr" id="search">
                                             <input class="sb-search-submit" type="submit" value="">
                                             <span class="sb-icon-search"> </span>
                                         </form>
                                     </div>
                                 </div>
+                                    -->
                                 <!-- search-scripts -->
                                 <script src="../../Content/client/js/classie.js"></script>
                                 <script src="../../Content/client/js/uisearch.js"></script>
@@ -158,13 +186,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </nav>
             </div>
              <div class="logo text-center" style="padding-left:1.5%; padding-right:1.5%">
-                <a href="index.html"><img src="../../Content/client/images/logo.jpg" alt="" /></a>
+                <a href="../../home/index"><img src="../../Content/client/images/logo.jpg" alt="" /></a>
             </div>
            
             
         </div>
     </div>
     <!-- header-section-ends-here -->
+    <!--
     <div class="wrap">
         <div class="move-text">
             <div class="breaking_news">
@@ -183,7 +212,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </script>
         </div>
     </div>
-
+        
+        -->
 
     <!-Body starts from here-->
 
@@ -202,31 +232,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="wrap">
                 <div class="col-md-3 col-xs-6 col-sm-4 footer-grid">
                     <h4 class="footer-head">About Us</h4>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                    <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here.</p>
+                    <p>Sada-e-librarian is like the little swallow who approached to put off the Namrood’s fire
+                             with a few drops of water in his beak.
+                            Likewise our effort will neither bring any revolution to Pakistani librarianship nor we wish to do so.
+                             It is just an effort in the footsteps of that little swallow’s way of thinking.</p>
                 </div>
                 <div class="col-md-2 col-xs-6 col-sm-2 footer-grid">
                     <h4 class="footer-head">Categories</h4>
                     <ul class="cat">
-                        <li><a href="business.html">Business</a></li>
-                        <li><a href="technology.html">Technology</a></li>
-                        <li><a href="entertainment.html">Entertainment</a></li>
-                        <li><a href="sports.html">Sports</a></li>
-                        <li><a href="shortcodes.html">Health</a></li>
-                        <li><a href="fashion.html">Fashion</a></li>
+
+                        @foreach(var v in listOfPostCategories){
+                           <li><a href="../../publications/posts/@v.CategoryId">@v.CategoryTitle</a></li>
+                        }
+                       
                     </ul>
                 </div>
                 <div class="col-md-4 col-xs-6 col-sm-6 footer-grid">
                     <h4 class="footer-head">Flickr Feed</h4>
                     <ul class="flickr">
-                        <li><a href="#"><img src="../../Content/client/images/bus4.jpg"></a></li>
-                        <li><a href="#"><img src="../../Content/client/images/bus2.jpg"></a></li>
-                        <li><a href="#"><img src="../../Content/client/images/bus3.jpg"></a></li>
-                        <li><a href="#"><img src="../../Content/client/images/tec4.jpg"></a></li>
-                        <li><a href="#"><img src="../../Content/client/images/tec2.jpg"></a></li>
-                        <li><a href="#"><img src="../../Content/client/images/tec3.jpg"></a></li>
-                        <li><a href="#"><img src="../../Content/client/images/bus2.jpg"></a></li>
-                        <li><a href="#"><img src="../../Content/client/images/bus3.jpg"></a></li>
+                        @{
+                            int ii = 0;
+                        foreach (var v in listOfPosts.Where(x=>x.isDeleted==0 && x.isPublished==1 && x.PostDetail.ToList().Count()>0))
+                        { 
+                            ii++;
+                            if(ii>=10)
+                            {
+                                break;
+                            }
+                        <li><a href="../../publications/detail/@v.PostId"><img src="@v.PostDetail.First().FileName.Replace("~","../..")"></a></li>
+                        }}
+                       
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -236,17 +271,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <address>
                         <ul class="location">
                             <li><span class="glyphicon glyphicon-map-marker"></span></li>
-                            <li>CENTER FOR FINANCIAL ASSISTANCE TO DEPOSED NIGERIAN ROYALTY</li>
+                            <li>4th Floor, 3rd Building Aiwan-e-Iqbal Complex Egerton Road Lahore</li>
                             <div class="clearfix"></div>
                         </ul>
                         <ul class="location">
                             <li><span class="glyphicon glyphicon-earphone"></span></li>
-                            <li>+0 561 111 235</li>
+                            <li>+92 (334) 976-3374</li>
                             <div class="clearfix"></div>
                         </ul>
                         <ul class="location">
                             <li><span class="glyphicon glyphicon-envelope"></span></li>
-                            <li><a href="mailto:info@example.com">mail@example.com</a></li>
+                            <li><a href="mailto:sel.org.pk@gmail.com">sel.org.pk@gmail.com</a></li>
                             <div class="clearfix"></div>
                         </ul>
                     </address>
@@ -257,7 +292,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="footer-bottom">
             <div class="wrap">
                 <div class="copyrights col-md-6">
-                    <p> © 2015 Express News. All Rights Reserved | Design by  <a href="http://w3layouts.com/"> W3layouts</a></p>
+                    <p> © 2018 Sada e Librarian. All Rights Reserved | Developed by <strong>Shakeel Zafar</strong> </p>
                 </div>
                 <div class="footer-social-icons col-md-6">
                     <ul>
@@ -274,8 +309,62 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </div>
     <!-- footer-section-ends-here -->
     <script type="text/javascript">
-        $(document).ready(function () {
 
+        
+
+
+        $(document).ready(function () {
+            //$('#checking').hide();
+
+           
+
+
+
+
+            $('#email').change(function () {
+
+                var Email = $('#email').val();
+
+
+                $.post("/users/CheckUserName?email=" + Email, function (data) {
+                    if (data == "y") {
+                        $("#checking").html("User already exists.\nPlease use an other email.")
+                        $("#upme").hide();
+                        $("#checking").show();
+                    } else {
+                        $("#upme").show();
+                        $("#checking").hide();
+                    }
+
+                });
+
+            });
+
+            
+           $("#form").submit(function (e) { e.preventDefault() });
+
+            $('#getmeIn').click(function () {
+
+                var Email = $('#inputEmail').val();
+                var Pass = $('#inputPassword').val();
+
+              
+                $.post("/users/access?email="+Email+"&password="+Pass, function (data) {
+                    if (data == "y") {
+                        $("#result").html("Invalid Email or Password.")                                               
+                        $("#result").show();
+                        $("#form").submit(function (e) { e.preventDefault() });
+                    } else {
+                        $("#result").hide();
+                       // alert("b");
+                        $("#form").unbind('submit').submit()
+                        //alert("a");
+                    }
+                    
+                });
+
+            });
+             
             var defaults = {
                 wrapID: 'toTop', // fading element id
                 wrapHoverID: 'toTopHover', // fading element hover id
@@ -305,17 +394,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     
     <div class="login-card"><img src="../../Content/studio/images/avatar.png" class="profile-img-card">
         <p class="profile-name-card"> </p>
-        <form class="form-signin"><span class="reauth-email"> </span>
-            <input class="form-control" type="email" required="" placeholder="Email address" autofocus="" id="inputEmail">
-            <input class="form-control" type="password" required="" placeholder="Password" id="inputPassword">
-            <div class="checkbox">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox">Remember me</label>
-                </div>
-            </div>
-            <button class="btn btn-primary btn-block btn-lg btn-signin" type="submit">Sign in</button>
-        </form><a href="../../users/forget" class="forgot-password">Forgot your password?</a></div>
+         <form id="form" class="form-signin"  method="post" action="../../users/login"><span class="reauth-email"> </span>
+            <input class="form-control" type="email" required placeholder="Email address" autofocus="" id="inputEmail">
+            <input class="form-control" type="password" required placeholder="Password" id="inputPassword">
+               <p id="result" hidden></p> 
+            <button class="btn btn-primary btn-block btn-lg btn-signin" type="submit" id="getmeIn">Sign in</button>
+        </form>
+        <a href="../../users/forget" class="forgot-password">Forgot your password?</a></div>
  
     <script id="bs-live-reload" data-sseport="17478" data-lastchange="1520862650539" src="../../Content/studio/js/livereload.js"></script>
       
@@ -331,12 +416,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <h3 style="text-align:center">Sign Up </h3>
      
         <p class="profile-name-card"> </p>
-        <form class="form-signin"><span class="reauth-email"> </span>
-            <input class="form-control" type="text" required="" placeholder="Your Name" id="fName">
-            <input class="form-control" type="email" required="" placeholder="Email address" autofocus="" id="inputEmail">
-            <input class="form-control" type="password" required="" placeholder="Password" id="inputPassword">
+        <form  class="form-signin" method="post" action="../../users/addUserProfile"><span class="reauth-email"> </span>
+            <input class="form-control" name="name" type="text" required="" placeholder="Your Name" id="name">
+            <input class="form-control" name="email" type="email" required="" placeholder="Email address" autofocus="" id="email">
+            <p id="checking" hidden></p>
+            <input class="form-control" name="pass" type="password" required="" placeholder="Password" id="pass">
            
-            <button class="btn btn-primary btn-block btn-lg btn-signin" type="submit">Sign Up</button>
+            <button class="btn btn-primary btn-block btn-lg btn-signin" id="upme" type="submit">Sign Up</button>
         </form>
   
     <script id="bs-live-reload" data-sseport="17478" data-lastchange="1520862650539" src="../../Content/studio/js/livereload.js"></script>

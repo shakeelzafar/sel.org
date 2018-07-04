@@ -1,0 +1,253 @@
+﻿@model SELORG.Models.Librarian
+@using SELORG.Controllers
+@{
+    Random rand = new Random();
+    String code = rand.Next(1, 10).ToString() + rand.Next(1, 10).ToString() + rand.Next(1, 10).ToString() + rand.Next(1, 10).ToString() + rand.Next(1, 10).ToString() + rand.Next(1, 10).ToString();
+    Session["profilecode"] = code;
+    Session["LibrarianId"] = Model.LibrarianId;
+}
+
+<!-- content-section-starts-here -->
+	<div class="main-body">
+		<div class="wrap">
+		<div class="col-md-8 content-left" >
+			 
+		 <div class="newsletter" style="border:grey solid 2px;background-image:url(../../Content/client/images/background.jpg)">
+					<h1 class="side-title-head">Librarian's Profile</h1>
+	                  <form method="post" action="../../professionals/updateprofessional" style="width:98%; margin-left:3%" id="basicBootstrapForm" class="form-horizontal">
+                       
+                         <div>
+                        <div class="form-group" style="float:right; width:40%">
+                          
+                            <div  class="col-xs-9">
+                                @if(Model.picture!=null){
+                                  <img style="width:150px; height:150px" class="circular" src="../../Files/Librarians/@Model.LibrarianId/@Model.picture" alt="" />
+                                }else{
+                                      <img style="width:150px; height:150px" class="circular" src="../../Content/studio/images/avatar.png" alt="" />
+                                }
+                               
+                            If this your profile, <a href="#" onclick="editme(@Model.LibrarianId)" data-toggle="modal" data-target="#getprofile">Click here</a> to update it.
+                            </div>
+                            <div class="col-xs-8">
+                               
+                            </div>
+                            
+                        </div>
+                             </div>
+                          <div style="float:left; width:60%">
+                       
+                            <div class="form-group">
+                            <label class="col-xs-5 control-label">Name:</label>
+                            <div class="col-xs-4">
+                               <p style="margin-top:7%">@Model.Name</p>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <label class="col-xs-5 control-label">Designation:</label>
+                            <div class="col-xs-4">
+                               <p style="margin-top:7%">@Model.Designation</p>
+                            </div>
+                        </div>
+
+                            <div class="form-group">
+                            <label class="col-xs-5 control-label">Qualification:</label>
+                            <div class="col-xs-4">
+                              <p style="margin-top:7%">@Model.Qualification</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-5 control-label">Email address:</label>
+                            <div class="col-xs-4">
+                              <p style="margin-top:7%">  @Model.Email </p>
+                            </div>
+                        </div>
+
+                               <div class="form-group">
+                            <label class="col-xs-5 control-label">Phone #:</label>
+                            <div class="col-xs-4">
+                              <p style="margin-top:7%"> @Model.Contact </p>
+                              
+                            </div>
+                        </div>
+                              </div><br />
+                       <div>
+
+                      <div class="form-group" >
+                          
+                            <label class="col-xs-4 control-label" ></label>
+                            
+                        </div>
+                         <div class="form-group">
+                            <label class="col-xs-3 control-label">Area of Specialization:</label>
+                            <div class="col-xs-8">
+                                @if (Model.Specialization != null)
+                                {
+                                    <ol style="margin-top:2%">
+                                    @foreach (String s in Model.Specialization.Split(';').ToList())
+                                    {
+                                         <li>@s</li>
+                                    }
+                                </ol>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Publications:</label>
+                            <div class="col-xs-8">
+                                @if (Model.Specialization != null)
+                                {
+                                    <ol style="margin-top:2%">
+                                    @foreach (String s in Model.Publications.Split(';').ToList())
+                                    {
+                                         <li>@s</li>
+                                    }
+                                </ol>
+                                }
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <label class="col-xs-3 control-label">Professional Association:</label>
+                            <div class="col-xs-8">
+                                @if (Model.Specialization != null)
+                                {
+                                    <ol style="margin-top:2%">
+                                    @foreach (String s in Model.ProfessionalAssosiation.Split(';').ToList())
+                                    {
+                                         <li>@s</li>
+                                    }
+                                </ol>
+                                }
+                            </div>
+                        </div>
+                           <div class="form-group">
+                            <label class="col-xs-3 control-label">Professional Contribution:</label>
+                            <div class="col-xs-8">
+                                @if (Model.Specialization != null)
+                                {
+                                    <ol style="margin-top:2%">
+                                    @foreach (String s in Model.ProfessionalContribution.Split(';').ToList())
+                                    {
+                                         <li>@s</li>
+                                    }
+                                </ol>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label ">Complete Address:</label>
+                             <div class="col-xs-8">
+                               <p style="margin-top:2%">@Model.Address
+                            </div>
+                            <br />
+                            
+                        </div> 
+                        </div>
+                    </form>
+
+				</div>
+
+ 
+		     @Html.Partial("/Views/Shared/comments.cshtml")
+				@Html.Partial("/Views/Shared/addresponse.cshtml")
+				</div>
+	            @Html.Partial("/Views/Shared/recentposts.cshtml")
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- content-section-ends-here -->
+
+
+
+
+
+<script type="text/javascript">
+
+    function editme(id) {
+        $("#profilemodal").load("../../professionals/profilemodal/" + id);
+     
+        //alert(id);
+    }
+
+        $(document).ready(function () {
+            //$('#checking').hide();
+
+          
+            $('#emailID').change(function () {
+
+                var Email = $('#emailID').val();
+
+
+                $.post("/professionals/CheckLibrariansName?email=" + Email, function (data) {
+                    if (data == "y") {
+                        $("#librarianExists").html("You have already used this email.\nPlease use an other email.")
+                        $("#addme").hide();
+                        $("#librarianExists").show();
+                    } else {
+                        $("#addme").show();
+                        $("#librarianExists").hide();
+                    }
+
+                });
+
+            });
+
+            
+         
+
+         
+             
+            var defaults = {
+                wrapID: 'toTop', // fading element id
+                wrapHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    </script>
+
+<div id="profilemodal"></div>
+   <div class="modal" id="getprofile" role="dialog">
+    <div class="modal-dialog">
+    
+    <div class="login-card">  @if(Model.picture!=null){
+                                  <img  class="profile-img-card" src="../../Files/Librarians/@Model.LibrarianId/@Model.picture" alt="" />
+                                }else{
+                                      <img class="profile-img-card" src="../../Content/studio/images/avatar.png" alt="" />
+                                }
+        <p class="profile-name-card">Code sent to your email. </p>
+         <form id="profileform" class="form-signin"  method="post" action="../../professionals/myprofile"><span class="reauth-email"> </span>
+            <input class="form-control" type="text" required placeholder="Code" autofocus="" id="inputcode">
+            <input id="actualcode" value="@Session["profilecode"]" hidden />   
+             <p id="profileresult"></p>           
+            <button class="btn btn-primary btn-block btn-lg btn-signin" type="submit" id="getmeIn">Get my Profile</button>
+        </form>
+      
+ 
+    <script id="bs-live-reload" data-sseport="17478" data-lastchange="1520862650539" src="../../Content/studio/js/livereload.js"></script>
+      
+    </div>
+  </div>
+  <script src="../../Content/admin/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $("#profileform").submit(function (e) { e.preventDefault() });
+        $('#getmeIn').click(function () {
+
+            var inputcode = $('#inputcode').val();
+            var actualcode = $('#actualcode').val();
+            //alert(actualcode);
+            if (inputcode == actualcode) {
+                $("#profileform").unbind('submit').submit();
+            }
+            else {
+                $("#profileform").submit(function (e) { e.preventDefault() });
+                $("#profileresult").text("Wrong Code.");
+            }
+        });
+    });
+    </script>

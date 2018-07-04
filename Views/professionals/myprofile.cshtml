@@ -1,0 +1,303 @@
+﻿@model SELORG.Models.Librarian
+
+<!-- content-section-starts-here -->
+ 
+
+<style>
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+</style>
+<p id="re"></p>
+	<div class="main-body">
+       
+		<div class="wrap">
+		<div class="col-md-8 content-left">
+			 
+		 <div class="newsletter" style="border:grey solid 2px">
+					<h1 class="side-title-head">Add me as Librarian:</h1>
+	                  <form method="post" action="../../professionals/updateprofessional" style="width:98%; margin-left:3%" id="basicBootstrapForm" class="form-horizontal" enctype="multipart/form-data">
+                       
+                            <div class="form-group">
+                           
+                              <label style="margin-top:60px" class="col-xs-3 control-label">Profile photo:</label>
+                            <div class="col-xs-8">
+                                 <div id="preview" style="width:50%">
+                                     @if(Model.picture!=null){
+                                  <img style="width:150px; height:150px" class="circular" src="../../Files/Librarians/@Model.LibrarianId/@Model.picture" alt="" />
+                                     }else{
+                                         <img style="width:150px; height:150px" class="circular" src="../../Content/studio/images/avatar.png" alt="" />
+                                     }
+                                    </div>
+                                 <div style="border:1px solid gray; background-color:lightgray;height:60px; width:50%;  " class="btn btn-file">
+                                  <input id="img" type="file" name="file" value="@Model.picture" onchange="previewFiles('img','preview')">
+
+                                    <p style="margin-top:7%">Upload image from here</p></div>
+                               
+
+                            </div>
+                        </div>
+                         
+                          <div class="form-group">
+                           
+                              <label class="col-xs-3 control-label">Librarian ID:</label>
+                            <div class="col-xs-8">
+                                <input type="text" hidden readonly style="color:black"  class="form-control" name="Id" value="@Model.LibrarianId"  />
+
+                            </div>
+                        </div>
+
+                           <div class="form-group">
+                            <label class="col-xs-3 control-label">Full name:</label>
+                            
+                            <div class="col-xs-8">
+                                <p>                               
+                                    <input  type="text" id="name"  style="color:black; float:left" readonly class="form-control" name="name" placeholder="Your Name"  value="@Model.Name"/>                                
+                                     <a class="btn btn-default" style="float:left; margin-top:1%; margin-left:2%" href="#" onclick="editme('name')">Edit</a> 
+                                    </p>
+                            </div>
+                        </div>
+
+                          <div class="form-group">
+                            <label class="col-xs-3 control-label">Designation:</label>
+                            <div class="col-xs-8">
+                                  <p>                               
+                                    <input value="@Model.Designation" type="text" id="designation" style="color:black; float:left" readonly class="form-control" name="designation" placeholder="Your Designation"  />                                
+                                     <a class="btn btn-default" style="float:left; margin-top:1%; margin-left:2%" href="#" onclick="editme('designation')">Edit</a> 
+                                    </p>
+                                
+                            </div>
+                        </div>
+
+                            <div class="form-group">
+                            <label class="col-xs-3 control-label">Qualification:</label>
+                            <div class="col-xs-8">
+                              <p>                               
+                                    <input value="@Model.Qualification"  type="text" id="qualification" style="color:black; float:left" readonly class="form-control" name="qualification" placeholder="Your qualification"  />                                
+                                     <a class="btn btn-default" style="float:left; margin-top:1%; margin-left:2%" href="#" onclick="editme('qualification')">Edit</a> 
+                                    </p>
+                                   
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Email address:</label>
+                            <div class="col-xs-8">
+                                 <p>                               
+                                    <input value="@Model.Email" type="text" id="emailID" style="color:black; float:left" readonly class="form-control" name="email" placeholder="Your Email"  />                                
+                                     <a class="btn btn-default" style="float:left; margin-top:1%; margin-left:2%" href="#" onclick="editme('emailID')">Edit</a> 
+                                    </p>                                   
+                                  <p hidden id="librarianExists"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Phone #:</label>
+                            <div class="col-xs-8">
+                                <p>                               
+                                    <input value="@Model.Contact"  type="text" id="contact" style="color:black; float:left" readonly class="form-control" name="contact" placeholder="Your Contact"  />                                
+                                     <a class="btn btn-default" style="float:left; margin-top:1%; margin-left:2%" href="#" onclick="editme('contact')">Edit</a> 
+                                    </p>    
+                              
+                              
+                            </div>
+                        </div>
+
+                      <div class="form-group">
+                            <label class="col-xs-3 control-label">Organization:</label>
+                            <div class="col-xs-8">
+                                   <p>                               
+                                    <input value="@Model.LibraryName"  type="text" id="libraryname" style="color:black; float:left" readonly class="form-control" name="libraryname" placeholder="Your Library"  />                                
+                                     <a class="btn btn-default" style="float:left; margin-top:1%; margin-left:2%" href="#" onclick="editme('libraryname')">Edit</a> 
+                                    </p>   
+                              
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-xs-3 control-label">Area of Specialization:</label>
+                            <div class="col-xs-6">
+                                
+                                <textarea name="Specialization"  style="height:6%"  class="form-control" placeholder="Your Specialization" >@Model.Specialization</textarea>
+                                 
+                                <p style="font-size:12px">SemiColon ';' separated</p>
+                               
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Publications:</label>
+                            <div class="col-xs-6">
+                                <textarea name="Publications" style="height:6%"  class="form-control" placeholder="Your Publications" >@Model.Publications</textarea>
+                                
+                                <p style="font-size:12px">SemiColon ';' separated</p>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <label class="col-xs-3 control-label">Area of Specialization:</label>
+                            <div class="col-xs-6">
+                                <textarea name="ProfessionalAssosiation" style="height:6%"  class="form-control" placeholder="Your Professional Assosiation" >@Model.ProfessionalAssosiation</textarea>
+                                
+                                <p style="font-size:12px">SemiColon ';' separated</p>
+                            </div>
+                        </div>
+                           <div class="form-group">
+                            <label class="col-xs-3 control-label">Professional Contribution:</label>
+                            <div class="col-xs-6">
+                                <textarea name="ProfessionalContribution" style="height:6%"  class="form-control" placeholder="Your Professional Contribution" >@Model.ProfessionalContribution</textarea>
+                                
+                                <p style="font-size:12px">SemiColon ';' separated</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label ">Complete Address:</label>
+                            <div class="col-xs-6">
+                                <textarea style="height:6%" required class="form-control" name="firstaddress" placeholder="Street/Block" >@Model.Address</textarea>
+                           </div>
+                            <br />
+                           <div class="form-group col-xs-3" style="margin-left:25%">
+                                <input type="text"  style="color:black" required class="form-control " value="@Model.City"  name="city" placeholder="City/State" />                     
+                                <input type="text" style="color:black" required class="form-control "  name="country" placeholder="Country" />                     
+                         
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group">
+                            <div class="col-xs-6 col-xs-offset-3">
+                                <div class="checkbox">
+                                    <label>
+                                        <input required type="checkbox" name="agree" value="agree" /> Agree with the <a href="../../home/terms_n_conditions">terms</a> and <a href="../../home/terms_n_conditions">conditions</a>.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-9 col-xs-offset-3">
+                                <button type="submit" class="btn btn-primary" id="addme" name="addme" value="Sign up">Update Me</button>
+                            </div>
+                        </div>
+                    </form>
+
+				</div>
+
+ 
+		    
+				</div>
+	            @Html.Partial("/Views/Shared/recentposts.cshtml")
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- content-section-ends-here -->
+
+ 
+
+
+<script type="text/javascript">
+
+    function editme(id) {
+
+        document.getElementById(id).readOnly = false;
+        
+    }
+ 
+        $(document).ready(function () {
+            //$('#checking').hide();
+
+          
+            getLocation();
+
+
+
+            $('#emailID').change(function () {
+
+                var Email = $('#emailID').val();
+
+
+                $.post("/professionals/CheckLibrariansName?email=" + Email, function (data) {
+                    if (data == "y") {
+                        $("#librarianExists").html("You have already used this email.\nPlease use an other email.")
+                        $("#addme").hide();
+                        $("#librarianExists").show();
+                    } else {
+                        $("#addme").show();
+                        $("#librarianExists").hide();
+                    }
+
+                });
+
+            });
+
+            
+         
+
+         
+             
+            var defaults = {
+                wrapID: 'toTop', // fading element id
+                wrapHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    
+
+
+    function previewFiles(imgId, previewId) {
+
+        
+        var preview = document.querySelector('#' + previewId);
+        if (preview.childElementCount > 0) {
+
+            $("#" + previewId).empty();
+          
+            
+        }
+        var files = document.querySelector('#'+imgId).files;
+
+        function readAndPreview(file) {
+
+            
+            // Make sure `file.name` matches our extensions criteria
+            if (/\.(jpe?g|png|gif|jpg)$/i.test(file.name)) {
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.className = 'circular';
+                    image.width = 150;
+                    image.height = 150;
+                    
+                    image.title = file.name;
+                    image.src = this.result;
+                    preview.appendChild(image);
+                }, false);
+
+                reader.readAsDataURL(file);
+            }
+
+        }
+
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+
+    }
+</script>

@@ -1,0 +1,14 @@
+﻿@{
+    Layout = null;
+}
+<div id="response" class="coment-form">
+	<h4>Leave your comment</h4>
+	<form method="post" action="../../Responses/addComment">
+        <input name="parentId" type="text" hidden value="0" id="parentId" />
+		<input name="name" type="text" value="Name " onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" required="">
+		<input name="email" type="email" value="Email (will not be published)*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email (will not be published)*';}" required="">
+		<input type="text" value="Website" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Website';}" required="">
+		<textarea name="content" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your Comment...';}" required="">Your Comment...</textarea>
+		<input type="submit" value="Submit Comment" >
+	</form>
+</div>	

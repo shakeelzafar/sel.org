@@ -1,0 +1,60 @@
+﻿@using SELORG.Controllers
+@using SELORG.Models
+@model SELORG.Models.PostCategory
+@{
+    selorgpkEntities ctx = new selorgpkEntities();
+    
+    
+    List<Post> listOfPosts = ctx.Posts.Where(x => x.PostCategoryId == Model.CategoryId).ToList();
+    foreach(var v in listOfPosts){
+
+        int y = 9;   
+    }
+    
+}
+<!-- content-section-starts-here -->
+	<div class="main-body">
+		<div class="wrap">
+			<div class="col-md-8 content-left">
+			 
+				<div class="articles">
+					<header>
+						<h3 class="title-head">@Model.CategoryTitle</h3>
+					</header>
+                   
+                        @foreach (var v in listOfPosts.Where(x=>x.isDeleted==0 && x.isPublished==1 && x.PostDetail.ToList().Count()>0))
+                        { 
+                            <div class="article">
+						<div class="article-left">
+							<a href="../../publications/detail/@v.PostId">
+                                <img src="@v.PostDetail.First().FileName.Replace("~","../..")"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>@v.CreatationDate<a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>@CRUD.getComments((String)Session["currentURL"]).Count()</a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>@v.views</a></p>
+								<a class="title" href="../../publications/detail/@v.PostId"> 
+                                    @v.PostTitle</a>
+							</div>
+							<div class="article-text">
+								<p>@v.PostDetail.First().Content</p>
+								<a href="../../publications/detail/@v.PostId"><img src="../../Content/client/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+                            
+                        }
+				</div>
+
+			     @Html.Partial("/Views/Shared/comments.cshtml")
+				@Html.Partial("/Views/Shared/addresponse.cshtml")
+
+
+				</div>
+
+			  @Html.Partial("/Views/Shared/recentposts.cshtml")
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- content-section-ends-here -->

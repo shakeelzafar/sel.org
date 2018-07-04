@@ -1,0 +1,86 @@
+﻿@model SELORG.Models.ApplicationCategory
+@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+}
+
+ <div class="content-wrapper">   
+     
+    <div class="card card-register mx-auto mt-5">
+        <h4 style="text-align:center">Category: @Model.ApplicationCategoryId
+     </h4> 
+      <div class="card-header">Add New Post</div>
+      <div class="card-body">
+        <form id="addformcategory" method="post" action="../../admin/add_app">       
+            
+          <div class="form-group">            
+            <input class="form-control" id="appCategoryId" value="@Model.ApplicationCategoryId" name="appCategoryId" required type="text" aria-describedby="emailHelp" hidden>
+          </div>
+       
+          <div class="form-group">
+            <label for="Title">Title of Application</label>
+            <input class="form-control"  id="Title" name="Title" type="text" aria-describedby="emailHelp" placeholder="Enter Title">
+          <p id="resultform" hidden></p>
+          </div>
+          
+          <div class="form-group">
+            <label for="Title">Content of Application</label>
+            <textarea class="form-control"  id="Content" name="Content" required  aria-describedby="emailHelp" placeholder="Enter Content"></textarea>
+          </div>
+           <div class="form-group">
+            <label for="Title">URL of Application</label>
+           <input class="form-control" id="URL" name="URI" required type="text" aria-describedby="emailHelp" placeholder="Enter URL">
+          </div>
+              <div class="form-group">
+            <label for="Title">Tags for Application (coma ',' separated)</label>
+           <input class="form-control" id="Tags" name="Tags" required type="text" aria-describedby="emailHelp" placeholder="Enter Tags">
+          </div>
+
+          <div class="form-group">
+            <label for="Title">Allignment (e.g Left for English Content, Right for Urdu...) </label>
+             <select name="Allignment" required class="form-control"><option value="left">Left.</option><option value="right">Right.</option></select>
+          </div>
+          <button id="submitform" class="btn btn-primary btn-block"  type="submit">Create</button>
+        </form>
+          <button id="cancel" class="btn btn-default btn-block"  type="submit"><a href="../../admin/getapp/@Model.ApplicationCategoryId">Cancel</a></button>
+        
+          
+          
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+<script src="../../Content/admin/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        //$('#checking').hide(); 
+
+        $("#addformcategory").submit(function (e) { e.preventDefault() });
+
+        $('#submitform').click(function () {
+            
+            var Title = $('#Title').val();
+            
+            var appCategoryId = $('#appCategoryId').val();
+          //  alert(Title + " " + appCategoryId);
+            $.post("/admin/isAppExists?title=" + Title + "&appCategoryId="+appCategoryId, function (data) {
+                if (data == "y") {
+                    $("#resultform").html("This Application already exists.")
+                    alert("This Application already exists.");
+                    $("#resultform").show();
+                    $("#addformcategory").submit(function (e) { e.preventDefault() });
+                } else {
+                    $("#resultform").hide();
+                    // alert("b");
+                    $("#addformcategory").unbind('submit').submit();
+                    //alert("a");
+                }
+
+            });
+
+        });
+
+
+    });
+    </script>

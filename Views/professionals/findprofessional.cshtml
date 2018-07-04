@@ -1,17 +1,52 @@
-﻿<!-- content-section-starts-here -->
+﻿@using SELORG.Models
+@using System.Globalization
+@using Newtonsoft.Json;
+
+@{
+    
+    String name = "";
+  try{  
+    String UserIP = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+    if (string.IsNullOrEmpty(UserIP))
+    {
+        UserIP = "14.1.104.13";//HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+    }
+    string url = "http://freegeoip.net/json/" + UserIP.ToString();
+    WebClient client = new WebClient();
+    string jsonstring = client.DownloadString(url);
+    dynamic dynObj = JsonConvert.DeserializeObject(jsonstring);
+    System.Web.HttpContext.Current.Session["UserCountryCode"] = dynObj.city;
+     name = (String)dynObj.city;
+  }catch(Exception ee){}
+    selorgpkEntities ctx = new selorgpkEntities();
+    List<Librarian> list = ctx.Librarians.Where(x => x.City.ToLower() == name.ToLower()).ToList();
+}
+<!-- content-section-starts-here -->
 	<div class="main-body">
 		<div class="wrap">
 			<div class="col-md-8 content-left" >
 			 <div class="newsletter">
 					<h1 class="side-title-head">Find Librarian</h1>
-					<p class="sign">Please enter the name of desired Librarian or Library name where he/she works..!</p>
-					<form>
-						<input type="text" class="text" value="Name or Library Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email Address';}">
+				
+					<form method="get" action="../../professionals/find">
+                         <label class="radio-inline"><input type="radio" value="name" checked name="type">Name</label>
+                        <label class="radio-inline"><input type="radio" value="org" name="type">Organization</label>
+                        <label class="radio-inline"><input type="radio" value="city" name="type">City</label>
+                        
+					<input type="text" style="color:black" name="librarianData" class="text">
 						<input type="submit" value="submit">
 					</form>
 				</div>
                 <br>
+                <hr />
                 <h3>Search Results:</h3><br>
+                @{
+                    if(list.Count()<1){
+                        <h4 style="margin-left:10%">No Result Found for your Search.</h4>
+                    <p style="margin-top:30px">If you have not submitted your data as a professional, Please submit it over <a href="../../professionals/addprofessional">here</a></p>
+                    }
+                    
+                foreach(var v in list){
             <div class="sports-top" style="border:1px solid grey; padding-left:3%; padding-bottom:2%; width:98%">
                
                 
@@ -23,237 +58,31 @@
                         </div>
                      
                             <div class="sc-text" style="margin-top:2%">
-                                <h6>Lorem Ipsum</h6>
-                                <a class="power" href="single.html">It isefgbsdkjfb dfgvk hsdfgsdfugy sdufgsdfgsdfgksdfygu a long established fact that a reader</a>
-                                <p class="date">On Mar 21, 2015</p>
+                                <a class="power" href="../../professionals/profile/@v.LibrarianId">
+                                <h6>@v.Name</h6>
+                                @v.LibraryName<br />@v.Address</a>
+                                <p class="date">@v.Email</p>
                                  
                                 <div class="clearfix"></div>
                             </div>
                        
                 <div class="clearfix"></div>
             </div>
- 
-				</div>
-			<div class="col-md-4 side-bar">
-			<div class="first_half">
-				 
-				<div class="list_vertical">
-		         	 	<section class="accordation_menu">
-						 
-						  <div>
-						    <input id="label-2" name="lida" type="radio" checked/>
-						    <label for="label-2" id="item2"><i class="icon-leaf" id="i2"></i>Recent Posts<i class="icon-plus-sign i-right1"></i><i class="icon-minus-sign i-right2"></i></label>
-						    <div class="content" id="a2">
-						       <div class="scrollbar" id="style-2">
-								   <div class="force-overflow">
-									<div class="popular-post-grids">
-											<div class="popular-post-grid">
-												<div class="post-img">
-													<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/tec2.jpg" alt="" /></a>
-												</div>
-												<div class="post-text">
-													<a class="pp-title" href="../../articles/detail_of_news/1"> The section of the mass media industry</a>
-													<p>On Feb 25 <a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>3 </a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>56 </a></p>
-												</div>
-												<div class="clearfix"></div>
-											</div>
-											<div class="popular-post-grid">
-												<div class="post-img">
-													<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/tec1.jpg" alt="" /></a>
-												</div>
-												<div class="post-text">
-													<a class="pp-title" href="../../articles/detail_of_news/1"> Lorem Ipsum is simply dummy text printing</a>
-													<p>On Apr 14 <a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>2 </a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>56 </a></p>
-												</div>
-												<div class="clearfix"></div>
-											</div>
-											<div class="popular-post-grid">
-												<div class="post-img">
-													<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/tec3.jpg" alt="" /></a>
-												</div>
-												<div class="post-text">
-													<a class="pp-title" href="../../articles/detail_of_news/1">There are many variations of Lorem</a>
-													<p>On Jun 25 <a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>0 </a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>56 </a></p>
-												</div>
-												<div class="clearfix"></div>
-											</div>
-											<div class="popular-post-grid">
-												<div class="post-img">
-													<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/tec4.jpg" alt="" /></a>
-												</div>
-												<div class="post-text">
-													<a class="pp-title" href="../../articles/detail_of_news/1">Sed ut perspiciatis unde omnis iste natus</a>
-													<p>On Jan 25 <a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>1 </a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>56 </a></p>
-												</div>
-												<div class="clearfix"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-						    </div>
-						  </div>
-						  <div>
-						    <input id="label-3" name="lida" type="radio"/>
-						    <label for="label-3" id="item3"><i class="icon-trophy" id="i3"></i>Comments<i class="icon-plus-sign i-right1"></i><i class="icon-minus-sign i-right2"></i></label>
-						    <div class="content" id="a3">
-						       <div class="scrollbar" id="style-2">
-							    <div class="force-overflow">
-								 <div class="response">
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>MARCH 21, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>MARCH 26, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>MAY 25, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>FEB 13, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>JAN 28, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>APR 18, 2015</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="media response-info">
-							<div class="media-left response-text-left">
-								<a href="#">
-									<img class="media-object" src="../../Content/client/images/icon1.png" alt="" />
-								</a>
-								<h5><a href="#">Username</a></h5>
-							</div>
-							<div class="media-body response-text-right">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available, 
-									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<ul>
-									<li>DEC 25, 2014</li>
-									<li><a href="../../articles/detail_of_news/1">Reply</a></li>
-								</ul>		
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-					</div>
-
-                                </div>
-						    </div>
-						  </div>
-						</section>
-					 </div>
-					 <div class="side-bar-articles">
-						<div class="side-bar-article">
-							<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/sai.jpg" alt="" /></a>
-							<div class="side-bar-article-title">
-								<a href="../../articles/detail_of_news/1">Contrary to popular belief, Lorem Ipsum is not simply random text</a>
-							</div>
-						</div>
-						<div class="side-bar-article">
-							<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/sai2.jpg" alt="" /></a>
-							<div class="side-bar-article-title">
-								<a href="../../articles/detail_of_news/1">There are many variations of passages of Lorem</a>
-							</div>
-						</div>
-						<div class="side-bar-article">
-							<a href="../../articles/detail_of_news/1"><img src="../../Content/client/images/sai3.jpg" alt="" /></a>
-							<div class="side-bar-article-title">
-								<a href="../../articles/detail_of_news/1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</a>
-							</div>
-						</div>
-					 </div>
-					 </div>
-			
-					<div class="clearfix"></div>
-			</div>
+                    
+                }
+                }
+                <hr />
+			@Html.Partial("/Views/Shared/comments.cshtml")
+				@Html.Partial("/Views/Shared/addresponse.cshtml")
+        </div>
+        @Html.Partial("/Views/Shared/recentposts.cshtml")
+		
 			<div class="clearfix"></div>
 		</div>
 	</div>
 	<!-- content-section-ends-here -->
+
+
 
 
 

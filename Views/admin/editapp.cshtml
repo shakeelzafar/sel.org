@@ -1,0 +1,123 @@
+﻿@using SELORG.Models;
+@model SELORG.Models.Application
+@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+    selorgpkEntities ctx = new selorgpkEntities();
+    List<ApplicationCategory> listOfApps = ctx.ApplicationCategories.Where(x=>x.isDeleted==0).ToList();
+}
+
+ <div class="content-wrapper">   
+     
+    <div class="card card-register mx-auto mt-5">
+        <h4 style="text-align:center">Category: @Model.ApplicationCategory.Title
+     </h4>  
+      <div class="card-header">Update Application</div>
+      <div class="card-body">
+        <form id="addformcategory" method="post" action="../../admin/updateapp">       
+            
+          <div class="form-group">            
+                <input class="form-control" id="AppId" name="AppId" value="@Model.ApplicationId" required type="text" aria-describedby="emailHelp" hidden>
+          </div>
+           <div class="form-group">            
+                <input class="form-control" id="CatId" name="CatId" value="@Model.AppCategoryId" required type="text" aria-describedby="emailHelp" hidden>
+          </div>
+           <div class="form-group">
+            <label for="Title">Application Category </label>
+             <select name="appCategoryId" id="appCategoryId" required class="form-control"><option value="@Model.AppCategoryId">@Model.ApplicationCategory.Title</option>
+                 @foreach(var v in listOfApps){
+                     if(v.ApplicationCategoryId!=Model.AppCategoryId){
+                     <option value="@v.ApplicationCategoryId">@v.Title.</option>
+                     }
+                 }
+                 </select>
+          </div>
+       
+          <div class="form-group">
+            <label for="Title">Title of Application</label>
+            <input class="form-control" id="Title" name="Title" value="@Model.ApplicationTitle" required type="text" aria-describedby="emailHelp" placeholder="Enter Title">               
+          </div>
+
+          <p id="resultform"></p>
+          <div class="form-group">
+            <label for="Title">Content of Application</label>
+            <textarea class="form-control" id="Content" name="Content"   required  aria-describedby="emailHelp" placeholder="Enter Content">@Model.ApplicationContent</textarea>
+               <input class="form-control" id="checkContent" value="@Model.ApplicationContent" hidden type="text" >
+          </div>
+           <div class="form-group">
+            <label for="Title">URL of Application</label>
+           <input class="form-control" id="URL" name="URL" value="@Model.Link" required type="text" aria-describedby="emailHelp" placeholder="Enter URL">
+               <input class="form-control" id="checkURL" value="@Model.Link" hidden type="text" >
+          </div>
+              <div class="form-group">
+            <label for="Title">Tags for Application (coma ',' separated)</label>
+           <input class="form-control" id="Tags" name="Tags" value="@Model.Tags" required type="text" aria-describedby="emailHelp" placeholder="Enter Tags">
+                  <input class="form-control" id="checkTags" value="@Model.Tags" hidden type="text" >
+          </div>
+
+          <div class="form-group">
+            <label for="Title">Allignment (e.g Left for English Content, Right for Urdu...) </label>
+             <select name="Allignment" id="appAllignment" required class="form-control"><option value="left">Left.</option><option value="right">Right.</option></select>
+
+          </div>
+            <div class="form-group">            
+                <input class="form-control" id="allignment"  value="@Model.Allignment" required type="text" aria-describedby="emailHelp" hidden>
+          </div>
+           <div class="form-group">
+            <label for="Title">isDeleted</label>
+            <select name="isDeleted" id="getDeleted" required class="form-control"><option value="0">No.</option><option value="1">Yes.</option></select>
+            <input id="isDeleted" value="@Model.isDeleted" hidden/>
+           
+          </div>
+          <button id="submitform" class="btn btn-primary btn-block"  type="submit">Create</button>
+        </form>
+          <button id="cancel" class="btn btn-default btn-block"  type="submit"><a href="../../admin/getapp/@Model.AppCategoryId">Cancel</a></button>
+        
+          
+          
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+<script src="../../Content/admin/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        //$('#checking').hide(); 
+
+        $("#addformcategory").submit(function (e) { e.preventDefault() });
+
+        $('#submitform').click(function () {
+
+            var Title = $('#Title').val();
+            var appCategoryId = $('#appCategoryId').val();
+        //   alert(Title + " " + appCategoryId);
+        //    alert($('#getDeleted').val() + " " + $('#isDeleted').val());
+            if (($('#Tags').val() == $('#checkTags').val()) &&
+                ($('#URL').val() == $('#checkURL').val()) &&
+                ($('#Content').val() == $('#checkContent').val()) &&
+                ($('#getDeleted').val() == $('#isDeleted').val()) &&
+                (appCategoryId == $('#CatId').val()) &&
+                ($('#allignment').val() == $('#appAllignment').val())) {
+                $.post("/admin/isAppExists?title=" + Title + "&appCategoryId=" + appCategoryId, function (data) {
+                    if (data == "y") {
+                        $("#resultform").html("This Application already exists.")
+                        $("#resultform").show();
+                        $("#addformcategory").submit(function (e) { e.preventDefault() });
+                    } else {
+                        $("#resultform").hide();
+                        // alert("b");
+                        $("#addformcategory").unbind('submit').submit();
+                        //alert("a");
+                    }
+
+                });
+            } else {
+                $("#addformcategory").unbind('submit').submit();
+            }
+
+        });
+
+
+    });
+    </script>

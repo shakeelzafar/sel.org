@@ -1,0 +1,56 @@
+﻿
+  <!-- Modal -->
+  
+    <div class="modal-dialog">
+    
+    <div class="login-card"><img src="../../Content/studio/images/avatar.png" class="profile-img-card">
+        <p class="profile-name-card">Submit Data </p>
+        <p>Your password is sent to your email. </p>
+         <form id="fform" class="form-signin"  method="post" action="../../users/login"><span class="reauth-email"> </span>
+            <input class="form-control" type="email" required placeholder="Email address" autofocus="" id="finputEmail">
+            <input class="form-control" type="password" required placeholder="Password" id="finputPassword">
+               <p id="fresult" hidden></p> 
+            <button class="btn btn-primary btn-block btn-lg btn-signin" type="submit" id="fgetmeIn">Sign in</button>
+        </form>
+        
+ 
+    <script id="bs-live-reload" data-sseport="17478" data-lastchange="1520862650539" src="../../Content/studio/js/livereload.js"></script>
+    
+    </div>
+  </div>
+  
+  <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            //$('#checking').hide();
+
+           
+          
+            $("#fform").submit(function (e) { e.preventDefault() });
+
+            $('#fgetmeIn').click(function () {
+
+                var Email = $('#finputEmail').val();
+                var Pass = $('#finputPassword').val();
+
+              
+                $.post("/users/access?email="+Email+"&password="+Pass, function (data) {
+                    if (data == "y") {
+                        $("#fresult").html("Invalid Email or Password.")                                               
+                        $("#fresult").show();
+                        $("#fform").submit(function (e) { e.preventDefault() });
+                    } else {
+                        $("#fresult").hide();
+                        // alert("b");
+                        $("#fform").unbind('submit').submit()
+                        //alert("a");
+                    }
+                    
+                });
+
+            });
+        });
+             
+    </script>
+  

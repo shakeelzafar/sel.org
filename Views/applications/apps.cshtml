@@ -1,0 +1,47 @@
+﻿@using SELORG.Models
+@{
+    
+    int app = (int)Session["apps"];
+    List<Application> list = new List<Application>();
+    selorgpkEntities ctx = new selorgpkEntities();
+    try
+    {
+        list = ctx.ApplicationCategories.First(x => x.ApplicationCategoryId == app).Applications.ToList();
+    }
+    catch (Exception e)
+    {
+    }
+}    
+<!-- content-section-starts-here -->
+<div class="main-body">
+    <div class="wrap">
+        <div class="col-md-8 content-left">
+            
+             @{
+                 
+                 foreach(var v in list)
+                 {
+             
+                      <div id="@v.ApplicationId" class="sports-top" style="border:1px solid grey; padding-left:3%; padding-bottom:2%">
+               
+                  <div   style="margin-top:2%">
+                                
+                                <a class="power" href="@v.Link" style="color:blue">@v.ApplicationTitle</a>
+                                @v.ApplicationContent
+                                 
+                                <div class="clearfix"></div>
+                            </div>
+                       
+                <div class="clearfix"></div>
+            </div>
+                 }
+             }
+               
+             @Html.Partial("/Views/Shared/comments.cshtml")
+				@Html.Partial("/Views/Shared/addresponse.cshtml")
+        </div>
+        @Html.Partial("/Views/Shared/recentposts.cshtml")
+        <div class="clearfix"></div>
+    </div>
+</div>
+<!-- content-section-ends-here -->

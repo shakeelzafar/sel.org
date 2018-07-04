@@ -1,0 +1,59 @@
+﻿
+  <!-- Modal -->
+  
+    <div class="modal-dialog">
+    
+    <div class="login-card">
+        <p class="profile-name-card"> Unsubscribe me </p>
+        <img src="../../Content/studio/images/avatar.png" class="profile-img-card">
+     <h5>Please enter your email address to unsubscribe from mialing List.</h5>
+            
+        <form class="form-signin" id="forgetform" method="get" action="../../users/unsubscrib" ><span class="reauth-email"> </span>
+            <input class="form-control" type="email" name="forgetemail" required="" placeholder="Email address" autofocus="" id="forgetemail">
+            
+            <p id="resultforget" hidden></p>
+            <button id="getmypass" class="btn btn-primary btn-block btn-lg btn-signin" type="submit">Do it..!</button>
+        </form>
+    <script src="../../Content/studio/js/jquery.min.js"></script>
+    <script src="../../Content/studio/js/bootstrap.min.js"></script>
+    <script id="bs-live-reload" data-sseport="17478" data-lastchange="1520862650539" src="../../Content/studio/js/livereload.js"></script>
+      
+    </div>
+  </div>
+  
+  <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            //$('#checking').hide();
+
+           
+          
+            $("#forgetform").submit(function (e) { e.preventDefault() });
+
+            $('#getmypass').click(function () {
+
+                var Email = $('#forgetemail').val();
+                
+
+              
+                $.post("/users/searchaccount?email=" + Email, function (data) {
+                    if (data == "y") {
+                        $("#resultforget").html("Invalid Email.")                                               
+                        $("#resultforget").show();
+                        $("#forgetform").submit(function (e) { e.preventDefault() });
+                    } else {
+                        $("#resultforget").hide();
+                       // alert("b");
+                        $("#forgetform").unbind('submit').submit()
+                        //alert("a");
+                    }
+                    
+                });
+
+            });
+             
+         
+        });
+    </script>
+  

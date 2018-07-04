@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+}
+
+ <div class="content-wrapper">   
+
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">Add New Application Category</div>
+      <div class="card-body">
+        <form id="addformcategory" method="post" action="../../admin/add_appcategory">
+       
+          <div class="form-group">
+            <label for="Title">Title of Category</label>
+            <input class="form-control" id="Title" name="title" required type="text" aria-describedby="emailHelp" placeholder="Enter Title">
+          </div>
+          <p id="resultform"></p>
+          <button id="submitform" class="btn btn-primary btn-block"  type="submit">Create</button>
+        </form>
+          <button id="cancel" class="btn btn-default btn-block"  type="submit"><a href="../../admin/appcategories">Cancel</a></button>
+        
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+<script src="../../Content/admin/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        //$('#checking').hide(); 
+
+        $("#addformcategory").submit(function (e) { e.preventDefault() });
+
+        $('#submitform').click(function () {
+
+            var Title = $('#Title').val();
+
+            $.post("/admin/isAppCategoryExists?title=" + Title, function (data) {
+                if (data == "y") {
+                    $("#resultform").html("This category already exists.")
+                    $("#resultform").show();
+                    $("#addformcategory").submit(function (e) { e.preventDefault() });
+                } else {
+                    $("#resultform").hide();
+                    // alert("b");
+                    $("#addformcategory").unbind('submit').submit()
+                    //alert("a");
+                }
+
+            });
+
+        });
+
+
+    });
+    </script>

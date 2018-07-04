@@ -1,0 +1,216 @@
+﻿@model SELORG.Models.UserProfile
+
+<!-- content-section-starts-here -->
+ 
+
+<style>
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+</style>
+<p id="re"></p>
+	<div class="main-body">
+       
+		<div class="wrap">
+		<div class="col-md-8 content-left">
+			 
+		 <div class="newsletter" style="border:grey solid 2px">
+					<h1 class="side-title-head">Profile:</h1>
+	                  <form method="post" action="../../users/updateuser" style="width:98%; margin-left:3%" id="basicBootstrapForm" class="form-horizontal" enctype="multipart/form-data">
+                       
+                            
+                              <label style="margin-top:60px" class="col-xs-3 control-label">Profile photo:</label>
+                            <div class="col-xs-8">
+                                 <div id="preview" style="width:50%">
+                                     @if(Model.picture!=null){
+                                  <img style="width:150px; height:150px" class="circular" src="../../Files/users/@Model.UserId/@Model.picture" alt="" />
+                                     }else{
+                                         <img style="width:150px; height:150px" class="circular" src="../../Content/studio/images/avatar.png" alt="" />
+                                     }
+                                    </div>
+                                 <div style="border:1px solid gray; background-color:lightgray;height:60px; width:50%;  " class="btn btn-file">
+                                  <input id="img" type="file" name="file" value="@Model.picture" onchange="previewFiles('img','preview')">
+
+                                    <p style="margin-top:7%">Upload image from here</p></div>
+                               
+
+                            </div>
+                       
+                         
+                          <div class="form-group">
+                           
+                              <label class="col-xs-3 control-label">User ID:</label>
+                            <div class="col-xs-8">
+                                <input type="text" hidden readonly style="color:black"  class="form-control" name="Id" value="@Model.UserId"  />
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Full name:</label>
+                            
+                            <div class="col-xs-8">
+                                <p>                               
+                                    <input  type="text" id="name"  style="color:black; float:left" readonly class="form-control" name="name" placeholder="Your Name"  value="@Model.DisplayName"/>                                
+                                     <a class="btn btn-default" style="float:left; margin-top:1%; margin-left:9%" href="#" onclick="editme('name')">Edit</a> 
+                                    </p>
+                            </div>
+                               
+                        </div>
+                           
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Email address:</label>
+                            <div class="col-xs-8">
+                                 <p>                               
+                                    <input value="@Model.Email" type="text" id="emailID" style="color:black; float:left" readonly class="form-control" name="email" placeholder="Your Email"  />                                
+                                     
+                                    </p>                                   
+                                  <p hidden id="usersExist"></p>
+                            </div>
+                        </div>
+
+                           <div class="form-group">
+                            <label class="col-xs-3 control-label">Password:</label>
+                            <div class="col-xs-6">
+                                 <p>                               
+                                    <input value="@Model.Password" type="password" id="passId" style="color:black; float:left" readonly class="form-control" name="password" placeholder="Your Password"  />                                
+                                     
+                                    </p>                                   
+                                
+                               
+                            </div>
+                               <div class="col-xs-2"><a class="btn btn-default" style="float:left; margin-top:1%; margin-left:2%" href="#" onclick="editme('passId')">Edit</a> </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-xs-9 col-xs-offset-3">
+                                <button type="submit" class="btn btn-primary" id="addme" name="addme" value="Sign up">Update Me</button>
+                            </div>
+                        </div>
+                    </form>
+
+				</div>
+
+ 
+		    
+				</div>
+	            @Html.Partial("/Views/Shared/recentposts.cshtml")
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- content-section-ends-here -->
+
+ 
+
+
+<script type="text/javascript">
+
+    function editme(id) {
+
+        document.getElementById(id).readOnly = false;
+        
+    }
+ 
+        $(document).ready(function () {
+            //$('#checking').hide();
+
+          
+            getLocation();
+
+
+
+            $('#emailID').change(function () {
+
+                var Email = $('#emailID').val();
+
+
+                $.post("/professionals/CheckLibrariansName?email=" + Email, function (data) {
+                    if (data == "y") {
+                        $("#librarianExists").html("You have already used this email.\nPlease use an other email.")
+                        $("#addme").hide();
+                        $("#librarianExists").show();
+                    } else {
+                        $("#addme").show();
+                        $("#librarianExists").hide();
+                    }
+
+                });
+
+            });
+
+            
+         
+
+         
+             
+            var defaults = {
+                wrapID: 'toTop', // fading element id
+                wrapHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    
+
+
+    function previewFiles(imgId, previewId) {
+
+        
+        var preview = document.querySelector('#' + previewId);
+        if (preview.childElementCount > 0) {
+
+            $("#" + previewId).empty();
+          
+            
+        }
+        var files = document.querySelector('#'+imgId).files;
+
+        function readAndPreview(file) {
+
+            
+            // Make sure `file.name` matches our extensions criteria
+            if (/\.(jpe?g|png|gif|jpg)$/i.test(file.name)) {
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.className = 'circular';
+                    image.width = 150;
+                    image.height = 150;
+                    
+                    image.title = file.name;
+                    image.src = this.result;
+                    preview.appendChild(image);
+                }, false);
+
+                reader.readAsDataURL(file);
+            }
+
+        }
+
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+
+    }
+</script>

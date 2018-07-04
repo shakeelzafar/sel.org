@@ -1,0 +1,119 @@
+﻿@using SELORG.Models
+@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+    int srNo = 1;
+    selorgpkEntities ctx = new selorgpkEntities();
+    List<PostCategory> listOfPostCategories = ctx.PostCategories.ToList();
+    List<ApplicationCategory> listOfAppCategories = ctx.ApplicationCategories.ToList();
+}
+
+<div id="result">
+<div class="content-wrapper">
+    
+<div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="../../admin/index">Admin</a>
+        </li>
+        <li class="breadcrumb-item active">Index</li>
+       
+      </ol>
+      <!-- Example Post categories-->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Post Categories
+              <div style="margin-left:80%; " >
+                   <a class="btn btn-success" href="../../admin/addpostcategory">Add New</a> 
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                   <th >Sr. No</th>
+                  <th>Title</th>
+                  <th>Post Count</th>
+                  <th>Post Views</th>
+                    <th>Status</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                    <th >Sr. No</th>
+                   <th>Title</th>
+                  <th>Post Count</th>
+                  <th>Post Views</th>
+                    <th>Status</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  
+                </tr>
+              </tfoot>
+              <tbody>
+                  @foreach(var v in listOfPostCategories){
+                  <tr >
+                   <td >@srNo</td>
+                  <td><a href="../../admin/getpost/@v.CategoryId">@v.CategoryTitle</a></td>
+                  <td>@v.Posts.ToList().Count()</td>
+                  <td>@v.Posts.ToList().Select(x=>x.views).ToList().Sum()</td>
+                  @if (v.isDeleted == 1) {<td>Deleted </td>} else{ <td>Active </td> }
+                  <td onclick="editpost(@v.CategoryId)"><a class="nav-link" href="#" ><i class="fa fa-edit"></i></a></td>
+                  <td><a class="nav-link" data-toggle="modal" href="#" onclick="deletepost(@v.CategoryId,'@v.CategoryTitle')" data-target="#removeModal"><i class="fa fa-remove"></i></a></td>
+                      </tr>
+                      srNo = srNo + 1;
+                  }
+                              
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+    
+   
+   
+</div>
+ </div>
+ </div>
+
+
+ 
+ <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="removeModalLabel">Ready to Delete?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Delete" below if you are ready to delete <p id="tobedeleted"></p>.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" type="submit" href="../../admin/deletepostcategory">Delete</a>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        function editpost(ID) {
+            //alert(ID);
+            $("#result").load("../../admin/editpostcategory/" + ID);
+        }
+
+        function deletepost(ID, Name) {
+            $("#tobedeleted").html(Name);
+            $("a[href='../../admin/deletepostcategory']").attr('href', '../../admin/deletepostcategory/' + ID);
+
+        }
+
+
+
+    </script>
