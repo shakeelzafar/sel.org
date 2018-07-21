@@ -2,7 +2,7 @@
 @{
     Layout = null;
     selorgpkEntities ctx = new selorgpkEntities();
-    List<Post> list = ctx.Posts.Where(x => x.isPublished == 1 && x.isDeleted == 0 && x.PostDetail.ToList().Count()>0).ToList();
+    List<Post> list = ctx.Posts.Where(x => x.isPublished == 1 && x.isDeleted == 0 && !x.PostCategory.CategoryTitle.ToLower().Equals("jobs") && x.PostDetail.ToList().Count()>0).ToList();
     list.Reverse();
     List<Post> pubs = ctx.Posts.Where(x => x.PostCategory.CategoryTitle == "megazine" && x.PostDetail.ToList().Count()>0 && x.isDeleted==0 && x.isPublished==1).ToList();
     
