@@ -13,37 +13,41 @@
                         {
                             String imageuri = v.userId + ".jpg";
                             
-				        	<div class="media response-info">
-						<div class="media-left response-text-left">
-							<a href="#">
-								<img class="media-object" src="../../Content/client/images/@imageuri" alt=""/>
-							</a>
-							<h5><a href="../../users/profile/@v.userId">@v.UserProfile.DisplayName</a></h5>
+				       <div class="media response-info"  >
+						<div class="media-left response-text-left"  >
+							  
+                               
+								<img class="media-object circular" src="../../Files/users/avatar.png" width="40px" height="40px" alt=""/>
+							 <img class="media-object circular" src="../../Files/users/@v.userId/@imageuri" width="40px" height="40px" alt=""/>
+						
 						</div>
-						<div class="media-body response-text-right">
+						<div class="media-body response-text-right" >
+                           <h5><a href="#">@v.UserProfile.DisplayName</a></h5>
 							<p>@v.Content</p>
-							<ul>
+							<ul style="margin-top:-3%">
 								<li>@v.commentDate</li>
 								<li><a href="#response" onclick="goToReply(@v.CommentId)">Reply</a></li>
 							</ul>
                             @{
                                 if(v.hasReply==1){
 
+                                    <h5>Replies</h5>
+                                    
                                     List<Comment> replies = list.Where(x => x.ReplyId == v.CommentId + "").ToList();
                                 int i=0;
                                 foreach (var comment in replies)
                                 { 
                                     imageuri = comment.userId+".jpg";
-							            <div class="media response-info">
+							            <div class="media response-info"   >
 								            <div class="media-left response-text-left">
-									            <a href="#">
-										            <img class="media-object" src="../../Content/client/images/@imageuri" alt=""/>
-									            </a>
-									            <h5><a href="#">@comment.UserProfile.DisplayName</a></h5>
+									                <img class="media-object circular" src="../../Files/users/avatar.png" width="40px" height="40px" alt=""/>
+						                    	 <img class="media-object circular" src="../../Files/users/@v.userId/@imageuri" width="40px" height="40px" alt=""/>
+									            
 								            </div>
 								            <div class="media-body response-text-right">
+                                                  <h5><a href="#">@comment.UserProfile.DisplayName</a></h5>
 									            <p>@comment.Content</p>
-									            <ul>
+									            <ul style="margin-top:-3%">
 										            <li>@comment.commentDate</li>
 										           
 									            </ul>		
