@@ -66,14 +66,14 @@
 			<div class="col-md-6 content-left single-post">
 				<div class="blog-posts">
 			<h3 style=" ;text-align:@Model.TitleAllignment; " class="post"><strong>@Model.PostTitle</strong></h3>
-            <h4 style="text-align:@Model.TitleAllignment; " class="post"><b>@Model.Author</b></h4>
+            <h4 style="text-align:@Model.TitleAllignment; margin-top:5px " class="post"><b>@Model.Author</b></h4>
 				<div class="last-article">
                     
                     @foreach(var v in Model.PostDetail.Where(x=>x.isDeleted==0).ToList()){
 					
 					<h3  style="  text-align:@v.TextAllignment">@v.Heading</h3>
                         if(v.FileName!=null && v.FileName!=""){
-					         if (v.Post.PostCategory.CategoryTitle.ToLower().Equals("magazine"))
+                            if (v.Post.PostCategory.CategoryTitle.ToLower().Equals("magazine"))
                             {
                                 <a href="@v.Link"> <img style="width:100%; height:600px" src="@v.FileName.Replace("~","../..")"/></a>
                             }
