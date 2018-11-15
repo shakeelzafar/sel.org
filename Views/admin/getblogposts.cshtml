@@ -60,7 +60,7 @@
                    foreach(var v in list.Where(x=>x.isPublished==1 && x.isDeleted==0 && x.PostDetail.Where(y=>y.isDeleted==0).ToList().Count()>0).ToList()){
                       <tr style="max-height:400px">
                           <th>@srNo</th>
-                      <td><a href="../../publications/post/@v.PostId">@v.PostTitle</a></td>
+                      <td><a href="../../publications/detail/@v.PostId">@v.PostTitle</a></td>
                       <td>@v.PostDetail.First().Heading</td>
                       <td>@v.views</td>
                       @if (v.isDeleted == 1) {<td>Deleted </td>} else{ <td>Active </td> }

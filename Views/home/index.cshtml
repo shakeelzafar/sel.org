@@ -2,7 +2,7 @@
 @{
     selorgpkEntities ctx = new selorgpkEntities();
     
-    PostCategory Model = ctx.PostCategories.First(x => x.CategoryTitle.ToLower() == "megazine" && x.isDeleted == 0);
+    PostCategory Model = ctx.PostCategories.First(x => x.CategoryTitle.ToLower() == "magazine" && x.isDeleted == 0);
     List<Post> listOfPosts = ctx.Posts.Where(x => x.PostCategoryId == Model.CategoryId).ToList(); 
     
 }
@@ -64,12 +64,12 @@
                                 try
                                 {
                                     Post v = listOfPosts.ElementAt(i);
-                            <div class="c-sports-main" style="margin-bottom:5%">
+                            <div class="c-sports-main" style="margin-bottom:5%; max-height:200px">
                                 <div class="c-image">
                                     <a href="../../publications/detail/@v.PostId"><img src="@v.PostDetail.First().FileName.Replace("~","../..")" alt="" /></a>
                                 </div>
                                 <div class="c-text">
-                                    <h6 style="text-align:@v.TitleAllignment">@v.PostTitle</h6>
+                                    <h4 style="text-align:@v.TitleAllignment">@v.PostTitle</h4>
                                     <a class="power" href="../../publications/detail/@v.PostId">@v.PostDetail.First().Content</a>
                                     <p class="date">@v.CreatationDate</p>
                                     <a class="reu" href="../../publications/detail/@v.PostId"><img src="../../Content/client/images/more.png" alt="" /></a>
@@ -103,12 +103,12 @@
                             list.Reverse();
                             for(int i=0; i<4 && i<list.Count(); i++){
                                 Blog v = list.ElementAt(i);
-                        <div class="c-sports-main" style="margin-bottom:5%">
+                        <div class="c-sports-main" style="margin-bottom:5%; max-height:200px">
                             <div class="c-image">
                                 <a href="../../publications/getblog/@v.BlogId"><img src="../../Files/Blogs/@v.BlogId/@v.picture" alt="" /></a>
                             </div>
                             <div class="c-text">
-                                <h6>@v.BlogTitle</h6>
+                                <h4>@v.BlogTitle</h4>
                                 <a class="power" href="../../publications/getblog/@v.BlogId">@v.BlogDescription</a>
                                 <p class="date">@v.CreatationDate</p>
                                 <a class="reu" href="../../publications/getblog/@v.BlogId"><img src="../../Content/client/images/more.png" alt="" /></a>

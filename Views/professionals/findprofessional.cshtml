@@ -4,7 +4,7 @@
 
 @{
     
-    String name = "";
+   /* String name = "";
   try{  
     String UserIP = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
     if (string.IsNullOrEmpty(UserIP))
@@ -17,9 +17,9 @@
     dynamic dynObj = JsonConvert.DeserializeObject(jsonstring);
     System.Web.HttpContext.Current.Session["UserCountryCode"] = dynObj.city;
      name = (String)dynObj.city;
-  }catch(Exception ee){}
+  }catch(Exception ee){}*/
     selorgpkEntities ctx = new selorgpkEntities();
-    List<Librarian> list = ctx.Librarians.Where(x => x.City.ToLower() == name.ToLower()).ToList();
+    List<Librarian> list = ctx.Librarians.Where(x => x.City.ToLower() == "lahore").ToList();
 }
 <!-- content-section-starts-here -->
 	<div class="main-body">

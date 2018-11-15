@@ -22,8 +22,8 @@
 						
 						</div>
 						<div class="media-body response-text-right" >
-                           <h5><a href="#">@v.UserProfile.DisplayName</a></h5>
-							<p>@v.Content</p>
+                           <h4><a href="#">@v.UserProfile.DisplayName</a></h4>
+							<h5>@v.Content</h5>
 							<ul style="margin-top:-3%">
 								<li>@v.commentDate</li>
 								<li><a href="#response" onclick="goToReply(@v.CommentId)">Reply</a></li>
@@ -31,7 +31,7 @@
                             @{
                                 if(v.hasReply==1){
 
-                                    <h5>Replies</h5>
+                                    <h4>Replies</h4>
                                     
                                     List<Comment> replies = list.Where(x => x.ReplyId == v.CommentId + "").ToList();
                                 int i=0;
@@ -45,8 +45,8 @@
 									            
 								            </div>
 								            <div class="media-body response-text-right">
-                                                  <h5><a href="#">@comment.UserProfile.DisplayName</a></h5>
-									            <p>@comment.Content</p>
+                                                  <h4><a href="#">@comment.UserProfile.DisplayName</a></h4>
+									            <h5>@comment.Content</h5>
 									            <ul style="margin-top:-3%">
 										            <li>@comment.commentDate</li>
 										           

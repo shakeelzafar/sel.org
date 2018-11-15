@@ -17,7 +17,7 @@
 			<div class="col-md-8 content-left">
 			 
 
-				<div class="articles">
+				<div class="articles" style="margin-top:-2%">
                     
                     
                     <div class="rslides">
@@ -41,26 +41,28 @@
                    
                         @foreach (var v in list.Where(x=>x.isDeleted==0 && x.isPublished==1 && x.PostDetail.ToList().Count()>0))
                         { 
-                            <div class="article">
-						<div class="article-left">
-							<a href="../../publications/detail/@v.PostId">
-                                <img src="@v.PostDetail.First().FileName.Replace("~","../..")"></a>
-						</div>
-						<div class="article-right">
-							<div class="article-title">
-								<p>@v.CreatationDate<a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>@CRUD.getComments((String)Session["currentURL"]).Count()</a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>@v.views</a></p>
-								<a class="title" href="../../publications/detail/@v.PostId"> 
-                                    @v.PostTitle</a>
-							</div>
-							<div class="article-text">
-								<p>@v.PostDetail.First().Content</p>
-								<a href="../../publications/detail/@v.PostId"><img src="../../Content/client/images/more.png" alt="" /></a>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</div>
                             
+                             <div class="article" style=" background-color:#ffffff;  padding-bottom:-15%">
+						        <div class="article-left" style="background-color:#ffffff; margin-top:1%; padding-left:1%">
+							        <a href="../../publications/detail/@v.PostId">
+                                        <img src="@v.PostDetail.First().FileName.Replace("~","../..")" ></a>
+						        </div>
+						        <div class="article-right"  style="margin-top:1%; padding-right:1%; ">
+							        <div class="article-title" style="background-color:#544e44;border:solid 1px grey; padding-left:2%" >
+								        <a style="color:white" class="title" href="../../publications/detail/@v.PostId"> 
+                                            @v.PostTitle</a>
+							        </div>
+							        <div class="article-text" style=" ">
+								        <h4 style="color:black">@v.PostDetail.First().Content</h4>
+								        <a href="../../publications/detail/@v.PostId"><img src="../../Content/client/images/more.png" alt="" /></a>
+								        <div class="clearfix"></div>
+                                
+                                        <p>@v.CreatationDate<a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>@CRUD.getComments((String)Session["currentURL"]).Count()</a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>@v.views</a></p>
+								
+							        </div>
+						        </div>
+						        <div class="clearfix"></div>
+					        </div> 
                         }
                           
 			

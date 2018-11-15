@@ -2,9 +2,15 @@
 @using SELORG.Models
 @{
     selorgpkEntities ctx = new selorgpkEntities();
-    
-    PostCategory Model = ctx.PostCategories.First(x => x.CategoryTitle.ToLower() == "jobs" && x.isDeleted == 0);
-    List<Post> listOfPosts = ctx.Posts.Where(x => x.PostCategoryId == Model.CategoryId).ToList();
+
+    PostCategory Model = null;
+     List<Post> listOfPosts = null;
+    try{
+        Model = ctx.PostCategories.First(x => x.CategoryTitle.ToLower() == "jobs" && x.isDeleted == 0);
+        listOfPosts= ctx.Posts.Where(x => x.PostCategoryId == Model.CategoryId).ToList();
+    }
+    catch (Exception ee) { };
+   
     
     
 }
@@ -13,7 +19,8 @@
 		<div class="wrap">
 			<div class="col-md-8 content-left">
 			 
-				<div class="articles">
+                @if(listOfPosts!=null){
+				<div class="articles" style="margin-top:-2%">
 					<header>
 						<h3 class="title-head">@Model.CategoryTitle</h3>
 					</header>
@@ -44,6 +51,11 @@
                           
 			
 				</div>
+                }
+                else
+                {
+                 <h3 style="margin:20px">No Jobs found.</h3>   
+                }
 
 			     @Html.Partial("/Views/Shared/comments.cshtml")
 				@Html.Partial("/Views/Shared/addresponse.cshtml")

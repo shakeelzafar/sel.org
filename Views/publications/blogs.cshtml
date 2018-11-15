@@ -12,7 +12,7 @@
 		<div class="wrap">
 			<div class="col-md-8 content-left">
 			 
-				<div class="articles">
+				<div class="articles" style="margin-top:-2%">
 					<header>
 						<h3 class="title-head">Blogs
 
@@ -29,27 +29,45 @@
                    
                         @foreach (var v in list)
                         { 
-                            <div class="article">
-						<div class="article-left">
-							<a href="../../publications/getblog/@v.BlogId">
-                                <img src="../../Files/Blogs/@v.BlogId/@v.picture"></a>
-						</div>
-						<div class="article-right">
-							<div class="article-title">
-								<p>@v.CreatationDate<a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>@CRUD.getComments((String)Session["currentURL"]).Count()</a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>@v.views</a></p>
-								<a class="title"  href="../../publications/getblog/@v.BlogId"> 
-                                    @v.BlogTitle</a>
-							</div>
-							<div class="article-text">
-								<p>@v.BlogDescription</p>
-                              <a  href="../../publications/getblog/@v.BlogId"><img src="../../Content/client/images/more.png" alt="" /></a>
-                                <p>Wrote by, <strong>@v.UserProfile.DisplayName</strong></p>
+                            <div class="article" style=" background-color:#ffffff;  padding-bottom:-15%">
+						        <div class="article-left" style="background-color:#ffffff; margin-top:1%; padding-left:1%">
+							       
+                                    @if (v.picture != null && v.picture != "")
+                                    {
+					                    <a href="../../publications/getblog/@v.BlogId"><img src="../../Files/Blogs/@v.BlogId/@v.picture"></a>
+                                    }
+                                    else
+                                    {
+                                          
+                                    }
+                                    
+                                    
+						        </div>
+
+                           <div class="article-right"  style="margin-top:1%; padding-right:1%; "> 
+
+                                    <div class="article-title" style="background-color:#544e44;border:solid 1px grey; padding-left:2%" >
+								       
+								        <a class="title" style="color:white" href="../../publications/getblog/@v.BlogId"> 
+                                            @v.BlogTitle</a>
+							        </div>
+								    <p>@v.BlogDescription</p>
+                               
+                                       
+                                 <a  href="../../publications/getblog/@v.BlogId" style="float:right"><img src="../../Content/client/images/more.png" alt="" /></a>         
+                                        <div class="clearfix"></div>
+
+                                         <p>@v.CreatationDate<a class="span_link" href="#"><span class="glyphicon glyphicon-comment"></span>@CRUD.getComments((String)Session["currentURL"]).Count()</a><a class="span_link" href="#"><span class="glyphicon glyphicon-eye-open"></span>@v.views</a></p>
+                                         
+                                        <p>Writer:  <strong>@v.UserProfile.DisplayName</strong></p>
 								
-								<div class="clearfix"></div>
-							</div>
+								        <div class="clearfix"></div>
+							        </div>
+                           
+							
 						</div>
 						<div class="clearfix"></div>
-					</div>
+					
                             
                         }
 				</div>

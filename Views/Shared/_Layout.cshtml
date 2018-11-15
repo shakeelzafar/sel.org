@@ -25,9 +25,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link rel="stylesheet" href="../../Content/studio/css/user.css">
     <link rel="stylesheet" href="../../Content/studio/css/Google-Style-Login.css">
 
+     
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/jameelkhushkhati-ttf" rel="stylesheet" type="text/css"/> 
+
+    <!-- The Beginning of a Record -->
+    <style type="text/css" media="screen">
+
+      #font-page-title:before {
+        font-family: 'JameelKhushkhatiRegular', serif;
+            font-weight: normal;
+            font-style: normal;
+            content: "Jameelkhushkhati.ttf";
+      }
+        </style>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <title>Sada-e-Librarian</title>
+    
     <link href="../../Content/client/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../../Content/client/js/jquery.min.js"></script>
@@ -62,40 +77,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body   >
     <!-- header-section-starts-here -->
     <div class="header" id="#to-top" style="margin-top:-2%">
-      <!--   <div class="header-top" style="margin-left:3%; margin-right:3%;  margin-top:.5%; margin-bottom:-.2%; padding-bottom:-.4%; background-color:#84754e"> 
-           <div class="wrap">
-                <div class="top-menu">
-                    <ul>
-                        <li><a href="../../home/index">Home</a></li>
-                        <li><a href="../../home/introduction">About Us</a></li>
-                       
-                        <li><a href="../../home/contact_us">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="num">
-                    @if(up==null){
-                    <p style="color:white"> <a style="color:black" class="btn btn-sm" data-toggle="modal" data-target="#login"> Sign In </a>  I
-                         <a style="color:black" class="btn btn-sm" data-toggle="modal" data-target="#signup"> Sign Up </a></p>
-                    }else{
-                       
-                            if(up.role==1||up.role==2){
-                                 <p style="color:white"> 
-                                 <a style="color:black" class="btn btn-sm" href="../../users/profile/@up.UserId"> Profile </a>  I
-                                 <a style="color:black" class="btn btn-sm" href="../../admin"> Dashboard </a></p>
-                                 
-                            }
-                        else{
-                                   <p style="color:white"> 
-                                     <a style="color:black" class="btn btn-sm" href="../../users/profile/@up.UserId"> Profile </a>  I
-                                      <a style="color:black" class="btn btn-sm" href="../../users/logout"> Sign Out </a></p>
-                        }
-                           
-                      
-                    }
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div> -->
+      
         <div class="header-bottom " >
             <div class="navigation" >
             
@@ -104,26 +86,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   <!--8e9da0-->
                  
                     <div class="top-menu" style="float:right; background-color:#544e44; margin-right:2.5%; ">
-                    <ul>
-                        <li><a style="color:white" href="../../home/index">Home</a></li>
-                        <li><a style="color:white" href="../../home/introduction">About Us</a></li>
+                    <ul style="float:right; margin-left:0%">
+                        
+                         <li  style=""><a style="color:white;" href="../../home/index" >Home</a></li>
+                        <li style=""><a style="color:white;" href="../../home/introduction" class="">About us</a></li>
+
                        
-                        <li><a style="color:white" href="../../home/contact_us">Contact Us</a></li>
+                        <li style="text-align:right"><a style="color:white;" href="../../home/contact_us">Contact us</a></li>
                           @if(up==null){
-                    <li style="color:white"> <a style="color:white" class="btn btn-sm" data-toggle="modal" data-target="#login"> Sign In </a>  I
-                         <a style="color:white" class="btn btn-sm" data-toggle="modal" data-target="#signup"> Sign Up </a></li>
+                    <li style="color:white;text-align:right "> <a style="color:white;text-align:right" class="btn btn-sm fa fa-fw fa-user" data-toggle="modal" data-target="#login">  </a>  I
+                         <a style="color:white;text-align:right" class="btn btn-sm btn btn-sm fa fa-fw fa-sign-out" data-toggle="modal" data-target="#signup"> </a></li>
                     }else{
                        
                             if(up.role==1||up.role==2){
                                  <li style="color:white"> 
-                                 <a style="color:white" class="btn btn-sm" href="../../users/profile/@up.UserId"> Profile </a>  I
+                                 <a style="color:white" class="btn btn-sm fa fa-fw fa-user" href="../../users/profile/@up.UserId">  </a>  I
                                  <a style="color:white" class="btn btn-sm" href="../../admin"> Dashboard </a></li>
                                  
                             }
                         else{
                                    <li style="color:white"> 
-                                     <a style="color:white" class="btn btn-sm" href="../../users/profile/@up.UserId"> Profile </a>  I
-                                      <a style="color:white" class="btn btn-sm" href="../../users/logout"> Sign Out </a></li>
+                                     <a style="color:white" class="btn btn-sm fa fa-fw fa-user" href="../../users/profile/@up.UserId">  </a>  I
+                                      <a style="color:white" class="btn btn-sm fa fa-fw fa-sign-out" href="../../users/logout"> </a></li>
                         }
                            
                       
@@ -133,7 +117,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div> 
                        
                     <br /> <br />
-                      <div class="wrap" style="margin-top:-.5%; background-color:#84754e"">
+                      <div class="wrap" style="margin-top:-.5%; background-color:#544e44"">
                         <div class="navbar-header" style="float:left; margin-top:-8%">
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                                 <span class="sr-only">Toggle navigation</span>
@@ -150,24 +134,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                
                                 
                                 <li  class="dropdown" >
-                                    <a style="color:#f4e9d2" href="../../publications/megazine" >Magazine</a>
+                                    <a style="color:#f4e9d2" href="../../publications/magazine" >Magazine</a>
                                     
                                 </li>
-                                <li class="dropdown" style="background-color:#84754e">
-                                    <a  style="color:#f4e9d2;background-color:#84754e"  href="#" class="dropdown-toggle" data-toggle="dropdown">Publications<b class="caret"></b></a>
-                                    <ul class="dropdown-menu" style="background-color:#84754e">
+                                <li class="dropdown" style="background-color:#544e44">
+                                    <a  style="color:#f4e9d2;background-color:#544e44"  href="#" class="dropdown-toggle" data-toggle="dropdown">Publications<b class="caret"></b></a>
+                                    <ul style="background-color:white" class="dropdown-menu" >
                                         @foreach(var v in listOfPostCategories.Where(x=>!x.CategoryTitle.ToLower().Equals("jobs") && !x.CategoryTitle.ToLower().Equals("blogs")).ToList()){
                                         <li><a href="../../publications/posts/@v.CategoryId">@v.CategoryTitle</a></li>
                                         <li class="divider"></li>
                                         }
                                     </ul>
                                 </li >
-                                  <li  style="background-color:#84754e"  class="dropdown" >
-                                    <a href="#" style="color:#f4e9d2;background-color:#84754e"  class="dropdown-toggle" data-toggle="dropdown">Services<b class="caret"></b></a>
+                                  <li  style="background-color:#544e44"  class="dropdown" >
+                                    <a href="#" style="color:#f4e9d2;background-color:#544e44"  class="dropdown-toggle" data-toggle="dropdown">Services<b class="caret"></b></a>
                                       
-                                    <ul style="background-color:#84754e" class="dropdown-menu">
+                                    <ul style="background-color:white" class="dropdown-menu">
                                         @foreach(var v in listOfApps){
-                                        <li><a href="../../applications/apps/@v.ApplicationCategoryId">@v.Title</a></li>
+                                        <li style="color:white"><a href="../../applications/apps/@v.ApplicationCategoryId">@v.Title</a></li>
                                         <li class="divider"></li>
                                         }
                                         
@@ -175,9 +159,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </ul>
                                 </li>
                                 
-                                  <li   class="dropdown" style="background-color:#84754e">
-                                    <a href="#" style="color:#f4e9d2;background-color:#84754e"  class="dropdown-toggle" data-toggle="dropdown" >Find a Librarian<b class="caret"></b></a>
-                                    <ul class="dropdown-menu" style="background-color:#84754e" >
+                                  <li   class="dropdown" style="background-color:#544e44">
+                                    <a href="#" style="color:#f4e9d2;background-color:#544e44"  class="dropdown-toggle" data-toggle="dropdown" >Find a Librarian<b class="caret"></b></a>
+                                    <ul style="background-color:white" class="dropdown-menu"  >
                                         <li><a href="../../professionals/addprofessional">Submit Your Data</a></li>
                                         <li class="divider"></li>
                                         <li><a href="../../professionals/findprofessional">Database</a></li>
@@ -223,7 +207,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </nav>
                
             </div>
-             <div style="margin-left:3%; margin-right:3%;  " class="logo text-center" >
+             <div style="margin-left:2.5%; margin-right:2.5%;  " class="logo text-center" >
                 <a href="../../home/index"><img src="../../Content/client/images/logo.jpg" alt="" /></a>
             </div>
            
@@ -231,16 +215,43 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
     </div>
     <!-- header-section-ends-here -->
-    <!--
-    <div class="wrap">
-        <div class="move-text">
-            <div class="breaking_news">
-                <h2>Breaking News</h2>
+    @{
+        
+        List<Post> news = null;
+        try{
+            news = ctx.PostCategories.First(x => (x.CategoryTitle.ToLower().Equals("news") || x.CategoryTitle.ToLower().Contains("news"))).Posts.Distinct().ToList();
+            if(news.Count()>7)
+            {
+                news = news.Take(7).ToList();
+            }
+        }
+        catch(Exception ee){}
+    if(news!=null){
+
+    <div class="wrap" style="">
+        <div class="move-text" style="background-color:#544e44; "  >
+            <div class="breaking_news" style="height:50px;" >
+                <h2 >Breaking News</h2>
+                    
             </div>
-            <div class="marquee">
-                <div class="marquee1"><a class="breaking" href="single.html">>>The standard chunk of Lorem Ipsum used since the 1500s is reproduced..</a></div>
-                <div class="marquee2"><a class="breaking" href="single.html">>>At vero eos et accusamus et iusto qui blanditiis praesentium voluptatum deleniti atque..</a></div>
-                <div class="clearfix"></div>
+
+            <div class="marquee" style="height:50px;  " >
+                @foreach(var v in news){
+                <div class="marquee1" >
+                    @if(v.TitleAllignment.ToLower().Equals("left")){
+                    <img style="width:35px; height:25px" src="../../Content/client/images/logo1.png"/>
+                    <a class="breaking" style="font-family: 'JameelKhushkhatiRegular', serif; font-style: normal; font-weight: normal;font-size:17px; color:white" href="../../publications/detail/@v.PostId">@v.PostTitle</a>
+                }
+                else
+                {
+                        <a  class="breaking" style="font-family: 'JameelKhushkhatiRegular', serif; font-style: normal; font-weight: normal;font-size:17px;color:white" href="../../publications/detail/@v.PostId">@v.PostTitle</a>
+                         <img style="width:35px;   height:25px" src="../../Content/client/images/logo1.png"/>
+                    
+                }
+                </div>
+                }
+              
+                
             </div>
             <div class="clearfix"></div>
             <script type="text/javascript" src="../../Content/client/js/jquery.marquee.min.js"></script>
@@ -250,8 +261,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </script>
         </div>
     </div>
-        
-        -->
+    }
+                }
 
     <!-Body starts from here-->
 

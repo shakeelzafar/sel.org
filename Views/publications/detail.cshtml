@@ -7,11 +7,8 @@
 <!-- content-section-starts-here -->
 	<div class="main-body">
 		<div class="wrap">
-		<ol class="breadcrumb">
-			  <li><a href="#">Publications</a></li>
-			  <li class="active">Detail</li>
-			</ol>
-			<div class="single-page">
+		 
+			<div class="single-page" style="margin-top:-2%">
 			<div class="col-md-2 share_grid">
 				<h3>SHARE</h3>
 				<ul>
@@ -68,17 +65,19 @@
 			</div>	
 			<div class="col-md-6 content-left single-post">
 				<div class="blog-posts">
-			<h3 style="text-align:@Model.TitleAllignment" class="post">Title: <strong>@Model.PostTitle</strong></h3>
-            <h4 style="text-align:@Model.TitleAllignment" class="post">Author: <b>@Model.Author</b></h4>
+			<h3 style=" ;text-align:@Model.TitleAllignment; " class="post"><strong>@Model.PostTitle</strong></h3>
+            <h4 style="text-align:@Model.TitleAllignment; " class="post"><b>@Model.Author</b></h4>
 				<div class="last-article">
                     
                     @foreach(var v in Model.PostDetail.Where(x=>x.isDeleted==0).ToList()){
 					
-					<h3 style="text-align:@v.TextAllignment">@v.Heading</h3>
-					<a href="@v.Link"> <img style="width:500px; height:300px" src="@v.FileName.Replace("~","../..")"/></a>
-					<p class="artext" style="text-align:@v.TextAllignment">@v.Content</p>
+					<h3  style="  text-align:@v.TextAllignment">@v.Heading</h3>
+                        if(v.FileName!=null && v.FileName!=""){
+					        <a href="@v.Link"> <img style="width:500px; height:300px" src="@v.FileName.Replace("~","../..")"/></a>
+                        }
+					<p class="artext" style="color:black; text-align:@v.TextAllignment; ">@v.Content</p>
 					}
-					<ul class="categories">
+					<ul class="categories"> 
                         @{
                             if(Model.Tags!=null){
                             foreach(String s in Model.Tags.Split(',').ToList()){

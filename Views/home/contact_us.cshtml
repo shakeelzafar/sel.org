@@ -9,10 +9,10 @@
     <div class="wrap">
         <div class="col-md-8 content-left">
             @foreach(var v in list){
-            <div class="sports-top" style="border:1px solid grey; padding-left:3%; padding-bottom:2%">
+            <div class="sports-top" style="border:2px solid grey; padding-left:3%; padding-bottom:2%">
                
                 
-                        <div class="s-grid-small">
+                        <div class="s-grid-small" >
                             <div class="sc-image-contact">
                                   @if(v.picture!=null){
                                    <a href="#">
@@ -24,19 +24,21 @@
                             </div>
                         </div>
                      
-                            <div class="sc-text" style="margin-top:2%">
-                                <h6>@v.DisplayName</h6>
-                                <a class="power" href="#">@v.Email &nbsp; &nbsp; &nbsp; 
+                            <div class="sc-text" style="margin-top:2%;">
+                                <h3>@v.DisplayName</h3>
+                                <br />
+                                <div   style="color:black;  " class="fa fa-fw fa-mail"> @v.Email &nbsp; &nbsp; &nbsp; 
+                                    </div>
                                     @if(v.role==1){
-                                        <p>Admin</p> }                                                    
+                                        <div style="color:black" >Working as: Admin</div> }                                                    
                                                      else if(v.role==2){
-                                                          <p>Co-Admin</p> } else if(v.role==3){ 
-                                                                              <p>Editor</p> } else if(v.role==4){
-                                                                                                <p>Team Member</p> }
+                                                          <div style="color:black" >Working as: Co-Admin</div> } else if(v.role==3){ 
+                                                                              <div style="color:black" >Working as: Editor</div> } else if(v.role==4){
+                                                                                                <div style="color:black" >Working as: Team Member</div> }
 
-                                </a>
-                                <p class="date">@v.RegistrationDate</p>
-                                 
+                                
+                                
+                                  
                                 <div class="clearfix"></div>
                             </div>
                        
