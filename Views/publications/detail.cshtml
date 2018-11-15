@@ -73,7 +73,14 @@
 					
 					<h3  style="  text-align:@v.TextAllignment">@v.Heading</h3>
                         if(v.FileName!=null && v.FileName!=""){
-					        <a href="@v.Link"> <img style="width:500px; height:300px" src="@v.FileName.Replace("~","../..")"/></a>
+					         if (v.Post.PostCategory.CategoryTitle.ToLower().Equals("magazine"))
+                            {
+                                <a href="@v.Link"> <img style="width:100%; height:600px" src="@v.FileName.Replace("~","../..")"/></a>
+                            }
+                            else
+                            {
+					            <a href="@v.Link"> <img style="width:100%; height:400px" src="@v.FileName.Replace("~","../..")"/></a>
+                            }
                         }
 					<p class="artext" style="color:black; text-align:@v.TextAllignment; ">@v.Content</p>
 					}
