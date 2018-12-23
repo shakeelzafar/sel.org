@@ -3,14 +3,23 @@
     UserProfile up = (UserProfile)Session["user"];
     selorgpkEntities ctx = new selorgpkEntities();
     List<ApplicationCategory> listOfApps = new List<ApplicationCategory>();
-    List<PostCategory> listOfPostCategories = ctx.PostCategories.Where(x => x.isDeleted == 0 && x.CategoryTitle.ToLower() != "megazine" && x.CategoryTitle.ToLower() != "blog").ToList();
-    try{
-      listOfApps = ctx.ApplicationCategories.Where(x=>x.isDeleted==0).ToList();
-    }catch(Exception e){
+    List<PostCategory> listOfPostCategories = null;
+    List<Post> listOfPosts = null;
+    try
+    {
+        listOfPostCategories = ctx.PostCategories.Where(x => x.isDeleted == 0 && x.CategoryTitle.ToLower() != "megazine" && x.CategoryTitle.ToLower() != "blog").ToList();
+        listOfApps = ctx.ApplicationCategories.Where(x => x.isDeleted == 0).ToList();
+        listOfPosts = ctx.Posts.ToList();
+
     }
-   
-    List<Post> listOfPosts = ctx.Posts.ToList();
+    catch (Exception e)
+    {
+    }
+
 }
+   
+   
+
 <!--
 Author: W3layouts
 Author URL: http://w3layouts.com
@@ -24,7 +33,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      <link rel="stylesheet" href="../../Content/studio/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../Content/studio/css/user.css">
     <link rel="stylesheet" href="../../Content/studio/css/Google-Style-Login.css">
-
+    <link rel="shortcut icon" href="../../Content/client/images/logo1.png" type="image/x-icon" />
      
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/jameelkhushkhati-ttf" rel="stylesheet" type="text/css"/> 
 
@@ -76,6 +85,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body   >
     <!-- header-section-starts-here -->
+
     <div class="header" id="#to-top" style="margin-top:-2%">
       
         <div class="header-bottom " >
@@ -93,25 +103,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                        
                         <li style="text-align:right"><a style="color:white;" href="../../home/contact_us">Contact us</a></li>
-                          @if(up==null){
+                          @if (up == null)
+                          {
                     <li style="color:white;text-align:right "> <a style="color:white;text-align:right" class="btn btn-sm fa fa-fw fa-user" data-toggle="modal" data-target="#login">  </a>  I
                          <a style="color:white;text-align:right" class="btn btn-sm btn btn-sm fa fa-fw fa-sign-out" data-toggle="modal" data-target="#signup"> </a></li>
-                    }else{
-                       
-                            if(up.role==1||up.role==2){
+                          }
+                          else
+                          {
+
+                              if (up.role == 1 || up.role == 2)
+                              {
                                  <li style="color:white"> 
                                  <a style="color:white" class="btn btn-sm fa fa-fw fa-user" href="../../users/profile/@up.UserId">  </a>  I
                                  <a style="color:white" class="btn btn-sm" href="../../admin"> Dashboard </a></li>
                                  
-                            }
-                        else{
+                              }
+                              else
+                              {
                                    <li style="color:white"> 
                                      <a style="color:white" class="btn btn-sm fa fa-fw fa-user" href="../../users/profile/@up.UserId">  </a>  I
                                       <a style="color:white" class="btn btn-sm fa fa-fw fa-sign-out" href="../../users/logout"> </a></li>
-                        }
-                           
-                      
-                    }
+                              }
+
+
+                          }
                     </ul>
                       
                 </div> 
@@ -140,20 +155,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <li class="dropdown" style="background-color:#544e44">
                                     <a  style="color:#f4e9d2;background-color:#544e44"  href="#" class="dropdown-toggle" data-toggle="dropdown">Publications<b class="caret"></b></a>
                                     <ul style="background-color:white" class="dropdown-menu" >
-                                        @foreach(var v in listOfPostCategories.Where(x=>!x.CategoryTitle.ToLower().Equals("jobs") && !x.CategoryTitle.ToLower().Equals("blogs")).ToList()){
+                                       
+                                        @try
+                                        {
+                                            foreach (var v in listOfPostCategories.Where(x => !x.CategoryTitle.ToLower().Equals("jobs") && !x.CategoryTitle.ToLower().Equals("blogs")).ToList())
+                                            {
                                         <li><a href="../../publications/posts/@v.CategoryId">@v.CategoryTitle</a></li>
                                         <li class="divider"></li>
+                                            }
                                         }
+                                        catch (Exception ef) { }
                                     </ul>
                                 </li >
                                   <li  style="background-color:#544e44"  class="dropdown" >
                                     <a href="#" style="color:#f4e9d2;background-color:#544e44"  class="dropdown-toggle" data-toggle="dropdown">Services<b class="caret"></b></a>
                                       
                                     <ul style="background-color:white" class="dropdown-menu">
-                                        @foreach(var v in listOfApps){
-                                        <li style="color:white"><a href="../../applications/apps/@v.ApplicationCategoryId">@v.Title</a></li>
-                                        <li class="divider"></li>
-                                        }
+                                         @try
+                                        {
+                                             foreach (var v in listOfApps)
+                                                {
+                                                <li style="color:white"><a href="../../applications/apps/@v.ApplicationCategoryId">@v.Title</a></li>
+                                                <li class="divider"></li>
+                                                }
+                                          }
+                                        catch (Exception ef) { }
                                         
                                          
                                     </ul>
@@ -218,15 +244,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     @{
         
         List<Post> news = null;
-        try{
+        try
+        {
             news = ctx.PostCategories.First(x => (x.CategoryTitle.ToLower().Equals("news") || x.CategoryTitle.ToLower().Contains("news"))).Posts.Distinct().ToList();
-            if(news.Count()>7)
+            if (news.Count() > 7)
             {
                 news = news.Take(7).ToList();
             }
         }
-        catch(Exception ee){}
-    if(news!=null){
+        catch (Exception ee) { }
+        if (news != null)
+        {
 
     <div class="wrap" style="">
         <div class="move-text" style="background-color:#544e44; "  >
@@ -236,18 +264,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
 
             <div class="marquee" style="height:50px;  " >
-                @foreach(var v in news){
+                @foreach (var v in news)
+                {
                 <div class="marquee1" >
-                    @if(v.TitleAllignment.ToLower().Equals("left")){
+                    @if (v.TitleAllignment.ToLower().Equals("left"))
+                    {
                     <img style="width:35px; height:25px" src="../../Content/client/images/logo1.png"/>
                     <a class="breaking" style="font-family: 'JameelKhushkhatiRegular', serif; font-style: normal; font-weight: normal;font-size:17px; color:white" href="../../publications/detail/@v.PostId">@v.PostTitle</a>
-                }
-                else
-                {
+                    }
+                    else
+                    {
                         <a  class="breaking" style="font-family: 'JameelKhushkhatiRegular', serif; font-style: normal; font-weight: normal;font-size:17px;color:white" href="../../publications/detail/@v.PostId">@v.PostTitle</a>
                          <img style="width:35px;   height:25px" src="../../Content/client/images/logo1.png"/>
                     
-                }
+                    }
                 </div>
                 }
               
@@ -261,7 +291,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </script>
         </div>
     </div>
-    }
+        }
                 }
 
     <!-Body starts from here-->
@@ -289,10 +319,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="col-md-2 col-xs-6 col-sm-2 footer-grid">
                     <h4 class="footer-head">Categories</h4>
                     <ul class="cat">
-
-                        @foreach(var v in listOfPostCategories){
+                        @try
+                        {
+                            foreach (var v in listOfPostCategories)
+                            {
                            <li><a href="../../publications/posts/@v.CategoryId">@v.CategoryTitle</a></li>
+                            }
                         }
+                        catch (Exception nk)
+                        { }
+
                        
                     </ul>
                 </div>
@@ -300,16 +336,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <h4 class="footer-head">Flickr Feed</h4>
                     <ul class="flickr">
                         @{
+                            try{
+                                
                             int ii = 0;
-                        foreach (var v in listOfPosts.Where(x=>x.isDeleted==0 && x.isPublished==1 && x.PostDetail.ToList().Count()>0))
-                        { 
-                            ii++;
-                            if(ii>=10)
+                            foreach (var v in listOfPosts.Where(x => x.isDeleted == 0 && x.isPublished == 1 && x.PostDetail.ToList().Count() > 0))
                             {
-                                break;
+                                ii++;
+                                if (ii >= 10)
+                                {
+                                    break;
+                                }
+                        <li><a href="../../publications/detail/@v.PostId"><img src="@v.PostDetail.First().FileName.Replace("~", "../..")"></a></li>
                             }
-                        <li><a href="../../publications/detail/@v.PostId"><img src="@v.PostDetail.First().FileName.Replace("~","../..")"></a></li>
-                        }}
+
+                             }
+                        catch (Exception nk)
+                        { }
+                            }
                        
                         <div class="clearfix"></div>
                     </ul>
@@ -431,8 +474,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
-
+    
 
 
   
@@ -478,3 +520,4 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       
     </div>
   </div>
+      

@@ -1,9 +1,15 @@
 ﻿@using SELORG.Models
 @{
     selorgpkEntities ctx = new selorgpkEntities();
-    
-    PostCategory Model = ctx.PostCategories.First(x => x.CategoryTitle.ToLower() == "magazine" && x.isDeleted == 0);
-    List<Post> listOfPosts = ctx.Posts.Where(x => x.PostCategoryId == Model.CategoryId).ToList(); 
+
+    PostCategory Model = null;
+    List<Post> listOfPosts = null;
+    try{
+        Model = ctx.PostCategories.First(x => x.CategoryTitle.ToLower() == "magazine" && x.isDeleted == 0);
+        listOfPosts = ctx.Posts.Where(x => x.PostCategoryId == Model.CategoryId).ToList();
+        listOfPosts.Reverse();
+    }catch(Exception ee)
+    {}
     
 }
 <script src="../../Content/client/js/responsiveslides.min.js"></script>
@@ -38,7 +44,7 @@
                         <li>
                             <img src="@v.PostDetail.First().FileName.Replace("~", "../..")" style="height:400px" alt="">
                             <div class="caption">
-                                <a style="text-align:@v.TitleAllignment" href="../../publications/detail/@v.PostId">@v.PostTitle</a>
+                                <h3><a style="text-align:@v.TitleAllignment" href="../../publications/detail/@v.PostId">@v.PostTitle</a></h3>
                             </div>
                         </li>
                             }
@@ -57,9 +63,11 @@
                             <h3 class="title-head">Posts</h3>
                         </header>
                         @{
+                            try{
                             listOfPosts = ctx.Posts.Where(x => x.PostCategoryId != Model.CategoryId).ToList();
                             listOfPosts = listOfPosts.Where(x => x.isDeleted == 0 && x.isPublished == 1 && x.PostDetail.ToList().Count() > 0).ToList();
                             listOfPosts.Reverse();
+                            }catch(Exception ef){}
                             for(int i=0; i<4; i++){
                                 try
                                 {
@@ -69,8 +77,8 @@
                                     <a href="../../publications/detail/@v.PostId"><img src="@v.PostDetail.First().FileName.Replace("~","../..")" alt="" /></a>
                                 </div>
                                 <div class="c-text">
-                                    <h4 style="text-align:@v.TitleAllignment">@v.PostTitle</h4>
-                                    <a class="power" href="../../publications/detail/@v.PostId">@v.PostDetail.First().Content</a>
+                                    <h3 style="text-align:@v.TitleAllignment">@v.PostTitle</h3>
+                                    <h5><a class="power" href="../../publications/detail/@v.PostId">@v.PostDetail.First().Content</a></h5>
                                     <p class="date">@v.CreatationDate</p>
                                     <a class="reu" href="../../publications/detail/@v.PostId"><img src="../../Content/client/images/more.png" alt="" /></a>
                                     <div class="clearfix"></div>
@@ -99,7 +107,9 @@
                         </header>
                         @{
 
-                            List<Blog> list = ctx.Blog.Where(x => x.isDeleted == 0).ToList();
+                            List<Blog> list = null;
+                            try{
+                            list = ctx.Blog.Where(x => x.isDeleted == 0).ToList();
                             list.Reverse();
                             for(int i=0; i<4 && i<list.Count(); i++){
                                 Blog v = list.ElementAt(i);
@@ -108,8 +118,8 @@
                                 <a href="../../publications/getblog/@v.BlogId"><img src="../../Files/Blogs/@v.BlogId/@v.picture" alt="" /></a>
                             </div>
                             <div class="c-text">
-                                <h4>@v.BlogTitle</h4>
-                                <a class="power" href="../../publications/getblog/@v.BlogId">@v.BlogDescription</a>
+                                <h3>@v.BlogTitle</h3>
+                                <h4><a class="power" href="../../publications/getblog/@v.BlogId">@v.BlogDescription</a></h4>
                                 <p class="date">@v.CreatationDate</p>
                                 <a class="reu" href="../../publications/getblog/@v.BlogId"><img src="../../Content/client/images/more.png" alt="" /></a>
                                 <div class="clearfix"></div>
@@ -117,6 +127,7 @@
                             <div class="clearfix"></div>
                         </div>
                         }
+                        }catch(Exception blo){}
                         }
                              
                     </div>

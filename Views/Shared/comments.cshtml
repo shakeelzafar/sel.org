@@ -2,12 +2,17 @@
 @{
     Layout = null;
     String URL = (String)Session["CurrentURL"];
-    List<Comment> list = new selorgpkEntities().Comments.Where(x => x.URL.Equals(URL) && x.isDeleted == 0).ToList();
+    List<Comment> list = null;
+    try{
+    list = new selorgpkEntities().Comments.Where(x => x.URL.Equals(URL) && x.isDeleted == 0).ToList();
+        
+    }catch(Exception li){}
 }
 
 	 <div class="response">
 					<h4>Responses</h4>
                     @{
+                        try{
                         if(list.Count()>0){
                         foreach (var v in list.Where(c => c.ReplyId == "0" || c.ReplyId == null).ToList())
                         {
@@ -22,9 +27,9 @@
 						
 						</div>
 						<div class="media-body response-text-right" >
-                           <h4><a href="#">@v.UserProfile.DisplayName</a></h4>
-							<h5>@v.Content</h5>
-							<ul style="margin-top:-3%">
+                           <h3><a href="#">@v.UserProfile.DisplayName</a></h3>
+							<h4>@v.Content</h4>
+							<ul style="margin-top:-2%">
 								<li>@v.commentDate</li>
 								<li><a href="#response" onclick="goToReply(@v.CommentId)">Reply</a></li>
 							</ul>
@@ -46,7 +51,7 @@
 								            </div>
 								            <div class="media-body response-text-right">
                                                   <h4><a href="#">@comment.UserProfile.DisplayName</a></h4>
-									            <h5>@comment.Content</h5>
+									            <h4>@comment.Content</h4>
 									            <ul style="margin-top:-3%">
 										            <li>@comment.commentDate</li>
 										           
@@ -56,6 +61,7 @@
 							            </div>
                             
                             }
+                            
                             }
                             }
 						</div>
@@ -66,6 +72,7 @@
                          else{
                          <p>No Responses found yet. </p>   
                         }
+                        }catch(Exception ll){}
                     }
 			
 				</div>	

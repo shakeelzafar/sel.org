@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "../../Views/Shared/_admin.cshtml";
+}
+
+<style>
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+</style>
+  
+
+ <div class="content-wrapper">   
+
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">Add New File</div>
+      <div class="card-body">
+        <form id="addformcategory" enctype="multipart/form-data" method="post" action="../../admin/add_magazine">
+       
+          
+           <div class="form-group">
+            <label for="Title"><b>Select image</b> </label>
+                <div style="border:1px solid gray; background-color:lightgray; width:100%;  " class="btn btn-file">
+                  <input type="file" name="file" >
+
+                    <p style="margin-top:1%">Upload image from here</p></div>
+                
+
+          </div>
+          <p id="resultform"></p>
+          <button id="submitform" class="btn btn-primary btn-block"  type="submit">Upload</button>
+        </form>
+        <button id="cancel" class="btn btn-default btn-block"  type="submit"><a href="../../admin/postcategories">Cancel</a></button>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+<script src="../../Content/admin/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        //$('#checking').hide(); 
+        
+        $("#addformcategory").submit(function (e) { e.preventDefault() });
+        
+        $('#submitform').click(function () {
+
+            var Title = $('#Title').val();
+            
+            $.post("/admin/isPostCategoryExists?title=" + Title, function (data) {
+                if (data == "y") {
+                    $("#resultform").html("This category already exists.")
+                    $("#resultform").show();
+                    $("#addformcategory").submit(function (e) { e.preventDefault() });
+                } else {
+                    $("#resultform").hide();
+                    // alert("b");
+                    $("#addformcategory").unbind('submit').submit()
+                    //alert("a");
+                }
+
+            });
+
+        });
+
+
+    });
+    </script>

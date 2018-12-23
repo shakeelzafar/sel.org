@@ -17,12 +17,12 @@
 						<h3 class="title-head">Blogs
 
                             @if(up!=null &&  up.Blog.ToList().Count()>0){
-                                <a href="../../admin/blogs" style="float:right" class="btn btn-success">Edit my Blog</a>
+                                <a href="../../admin/blogs" style="float:right; font-size:17px" class="btn btn-success">Edit my Blog</a>
                             }else if(up!=null){
-                                <a href="../../admin/blogs" style="float:right" class="btn btn-success">Create your own</a>
+                                <a href="../../admin/blogs" style="float:right; font-size:17px" class="btn btn-success">Create your own</a>
                             }
                             else{
-                               <p style="float:right;font-size:12px"class="btn btn-sm" data-toggle="modal" data-target="#signup" >To create your own blog, <a>register here</a> </p>
+                               <p style="float:right;font-size:15px"class="btn btn-sm" data-toggle="modal" data-target="#signup" >To create your own blog, <a>register here</a> </p>
                             }
                         </h3> 
 					</header>
@@ -48,10 +48,10 @@
 
                                     <div class="article-title" style="background-color:#544e44;border:solid 1px grey; padding-left:2%" >
 								       
-								        <a class="title" style="color:white" href="../../publications/getblog/@v.BlogId"> 
+								        <a class="title" style="color:white; font-size:19px" href="../../publications/getblog/@v.BlogId"> 
                                             @v.BlogTitle</a>
 							        </div>
-								    <p>@v.BlogDescription</p>
+								    <p style="font-size:18px">@v.BlogDescription</p>
                                
                                        
                                  <a  href="../../publications/getblog/@v.BlogId" style="float:right"><img src="../../Content/client/images/more.png" alt="" /></a>         

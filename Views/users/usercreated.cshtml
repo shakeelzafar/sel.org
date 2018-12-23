@@ -1,0 +1,65 @@
+﻿@{
+    bool sentEmail = false;
+    try{
+    sentEmail = (bool)Session["forgetemailsent"];
+    }catch(Exception ep){}
+    
+}
+
+  <!-- Modal -->
+  
+    <div class="modal-dialog">
+    @{
+            <div class="login-card">
+        <h3 class="profile-name-card"> Email Sent</h3>
+        
+     <h5>An email is sent to your email account: @Session["newuser"] for confirmation. Please follow that link to confirm the account. </h5>
+                 
+        <br /><hr /><h5>Many Thanks. SEL Team.</h5>
+            
+        
+    <script src="../../Content/studio/js/jquery.min.js"></script>
+    <script src="../../Content/studio/js/bootstrap.min.js"></script>
+    
+      
+    </div>
+    }
+    
+  </div>
+  
+  <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            //$('#checking').hide();
+
+           
+          
+            $("#forgetform").submit(function (e) { e.preventDefault() });
+
+            $('#getmypass').click(function () {
+
+                var Email = $('#forgetemail').val();
+                
+
+              
+                $.post("/users/searchaccount?email=" + Email, function (data) {
+                    if (data == "y") {
+                        $("#resultforget").html("Invalid Email.")                                               
+                        $("#resultforget").show();
+                        $("#forgetform").submit(function (e) { e.preventDefault() });
+                    } else {
+                        $("#resultforget").hide();
+                       // alert("b");
+                        $("#forgetform").unbind('submit').submit()
+                        //alert("a");
+                    }
+                    
+                });
+
+            });
+             
+         
+        });
+    </script>
+  

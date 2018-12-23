@@ -3,6 +3,7 @@
 @{
     selorgpkEntities ctx = new selorgpkEntities();
     List<PostCategory> list = ctx.PostCategories.Where(x => x.isDeleted == 0).ToList();
+    int i = 0;
 }
 <!-- content-section-starts-here -->
 	<div class="main-body">
@@ -69,20 +70,30 @@
             <h4 style="text-align:@Model.TitleAllignment; margin-top:5px " class="post"><b>@Model.Author</b></h4>
 				<div class="last-article">
                     
-                    @foreach(var v in Model.PostDetail.Where(x=>x.isDeleted==0).ToList()){
+                    @foreach(var v in Model.PostDetail.Where(x=>x.isDeleted==0).ToList())
+                    {
+                        if (i == 0 && Model.PostCategory.CategoryTitle.ToLower().Equals("magazine"))
+                        {
+                            i++;
+                            continue;
+                        }
 					
-					<h3  style="  text-align:@v.TextAllignment">@v.Heading</h3>
+					<h3  style="margin-bottom:-.5%;  text-align:@v.TextAllignment">@v.Heading</h3>
                         if(v.FileName!=null && v.FileName!=""){
+                            
+                             <p class="artext" style="color:black; margin-top:-1%; text-align:@v.TextAllignment; ">@v.Content</p>
+                        
                             if (v.Post.PostCategory.CategoryTitle.ToLower().Equals("magazine"))
                             {
-                                <a href="@v.Link"> <img style="width:100%; height:600px" src="@v.FileName.Replace("~","../..")"/></a>
+                                String url = "../../publications/version?title="+v.Link;
+                                <a href="@url"> <img style="width:100%; height:600px" src="@v.FileName.Replace("~","../..")"/></a>
                             }
                             else
                             {
 					            <a href="@v.Link"> <img style="width:100%; height:400px" src="@v.FileName.Replace("~","../..")"/></a>
                             }
                         }
-					<p class="artext" style="color:black; text-align:@v.TextAllignment; ">@v.Content</p>
+					
 					}
 					<ul class="categories"> 
                         @{
@@ -99,7 +110,7 @@
 				<div class="row related-posts">
 					<h4>Articles You May Like</h4>
                     @{
-                        int i=0; 
+                        i=0; 
                     foreach(var v in Model.PostCategory.Posts.Where(x=>x.PostId!=Model.PostId && x.isDeleted==0 && x.isPublished==1).ToList().Where(x=>x.PostDetail.ToList().Count()>0).ToList()){
                         
 					<div class="col-xs-6 col-md-3 related-grids">

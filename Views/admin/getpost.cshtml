@@ -16,11 +16,18 @@
       </ol>
       <!-- Example Post categories-->
       <div class="card mb-3">
+          
         <div class="card-header">
-          <i class="fa fa-table"></i> @Model.CategoryTitle           
-              <div style="margin-left:80%; " >
-                   <a class="btn btn-success" href="../../admin/addpost/@Model.CategoryId">Add New</a> 
-          </div>
+          <i class="fa fa-table"></i> @Model.CategoryTitle        
+            @if(Model.CategoryTitle.ToLower().Equals("magazine"))   
+            {
+              
+                       <a class="btn btn-success" href="../../admin/addmagazine/@Model.CategoryId">Add a file</a>  
+                       
+            }
+           
+                   <a class="btn btn-success" href="../../admin/addpost/@Model.CategoryId">Add Post</a> 
+          
 
         </div>
         <div class="card-body">
@@ -61,7 +68,7 @@
                       <td>@v.views</td>
                       @if (v.isDeleted == 1) {<td>Deleted </td>} else{ <td>Active </td> }
                       <td onclick="editpost(@v.PostId)"><a class="nav-link" href="#" ><i class="fa fa-edit"></i></a></td>
-                      <td><a class="nav-link" data-toggle="modal" href="#" onclick="deletepost(@v.PostId,'@v.PostTitle')" data-target="#removeModal"><i class="fa fa-remove"></i></a></td>
+                      <td><a class="nav-link" data-toggle="modal" href="#" onclick="editpost2(@v.PostId,'@v.PostTitle')" data-target="#removeModal" ><i class="fa fa-remove"></i></a></td>
                           </tr>
                        srNo = srNo + 1;
                   }
@@ -99,13 +106,22 @@
     </div>
     <script type="text/javascript">
         function editpost(ID) {
-            //alert(ID);
+            alert(ID);
             $("#result").load("../../admin/editpost/" + ID);
         }
-
-        function deletepost(ID, Name) {
+        function editpost2(ID, Name) {
+           // alert(ID);
             $("#tobedeleted").html(Name);
+
             $("a[href='../../admin/deletepost']").attr('href', '../../admin/deletepost/' + ID);
+
+           // $("#result").load("../../admin/editpost/" + ID);
+        }
+        function deletepost(ID, Name) {
+            alert(ID);
+           // $("#tobedeleted").html(Name);
+           
+            //$("a[href='../../admin/deletepost']").attr('href', '../../admin/deletepost/' + ID);
 
         }
 
